@@ -1,0 +1,15 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>Notre Boutique</h1>
+    <ul>
+        {% for product in products %}
+            <li>
+                <h3>{{ product.name }}</h3>
+                <p>{{ product.description }}</p>
+                <strong>{{ product.price }} €</strong>
+                <button><a href="#">Ajouter au panier</a></button>
+            </li>
+        {% endfor %}
+    </ul>
+{% endblock %}

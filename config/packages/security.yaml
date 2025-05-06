@@ -1,29 +1,42 @@
 security:
-    # https://symfony.com/doc/current/security.html#registering-the-user-hashing-passwords
+    # Configuration de hachage des mots de passe (remplace "encoders")
     password_hashers:
-        Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface: 'auto'
-    # https://symfony.com/doc/current/security.html#loading-the-user-the-user-provider
+        App\Entity\User:
+            algorithm: auto
+
+    # Configuration des fournisseurs d'utilisateurs
     providers:
-        users_in_memory: { memory: null }
+        app_user_provider:
+            entity:
+                class: App\Entity\User
+                property: email
+
+    # Configuration des firewalls
     firewalls:
-        dev:
+        dev: # Firewall pour le dev : fichiers statiques, profiler, etc.
             pattern: ^/(_(profiler|wdt)|css|images|js)/
             security: false
+
         main:
             lazy: true
-            provider: users_in_memory
-
-            # activate different ways to authenticate
-            # https://symfony.com/doc/current/security.html#the-firewall
-
-            # https://symfony.com/doc/current/security/impersonating_user.html
-            # switch_user: true
-
-    # Easy way to control access for large sections of your site
-    # Note: Only the *first* access control that matches will be used
+            provider: app_user_provider
+            form_login:
+                login_path: app_login          # Route où le formulaire de connexion est affiché
+                check_path: app_login    # Route pour valider les identifiants
+                enable_csrf: true             # Ajoutez cette option si vous utilisez des tokens CSRF
+                csrf_token_id: authenticate   # ID du token CSRF
+                username_parameter: username     # Le champ "name" du formulaire pour l'e-mail
+                password_parameter: password  # Le champ "name" du formulaire pour le mot de passe
+                default_target_path: home # Où rediriger après authentification
+            logout:
+                path: app_logout
+                target: app_login
+    # Contrôle des accès en fonction des rôles
     access_control:
-        # - { path: ^/admin, roles: ROLE_ADMIN }
-        # - { path: ^/profile, roles: ROLE_USER }
+        - { path: ^/login$, roles: IS_AUTHENTICATED_ANONYMOUSLY } # La page de login accessible à tous
+        - { path: ^/logout, roles: IS_AUTHENTICATED_ANONYMOUSLY } # Logout accessible à tous
+        - { path: ^/admin, roles: ROLE_ADMIN } # Les admins uniquement
+        - { path: ^/$, roles: ROLE_USER } # Par défaut, tout utilisateur connecté
 
 when@test:
     security:

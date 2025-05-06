@@ -1,0 +1,24 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Accueil{% endblock %}
+
+{% block stylesheets %}
+    <link rel="stylesheet" href="{{ asset('css/style.css') }}">
+{% endblock %}
+
+{% block body %}
+    <h1>Bienvenue sur notre site</h1>
+    <p>Découvrez nos derniers produits et l’esprit de notre marque !</p>
+
+    <h2>Nos sweat-shirts mis en avant</h2>
+    <ul>
+        {% for product in featuredProducts %}
+            <li>
+                <strong>{{ product.name }}</strong> - {{ product.price }} €
+                {% if user %}
+                    <button><a href="#">Voir</a></button>
+                {% endif %}
+            </li>
+        {% endfor %}
+    </ul>
+{% endblock %}
