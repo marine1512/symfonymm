@@ -22,7 +22,7 @@ security:
             provider: app_user_provider
             form_login:
                 login_path: app_login          # Route où le formulaire de connexion est affiché
-                check_path: app_login    # Route pour valider les identifiants
+                check_path: app_login_check    # Route pour valider les identifiants
                 enable_csrf: true             # Ajoutez cette option si vous utilisez des tokens CSRF
                 csrf_token_id: authenticate   # ID du token CSRF
                 username_parameter: username     # Le champ "name" du formulaire pour l'e-mail

@@ -21,6 +21,12 @@ class SecurityController extends AbstractController
             'error' => $authenticationUtils->getLastAuthenticationError(),
         ]);
     }
+    #[Route(path: '/login_check', name: 'app_login_check')]
+public function loginCheck(): void
+{
+    // Ce processus est géré automatiquement par Symfony. Ne rien implémenter ici.
+    throw new \LogicException('This method can be blank - it will be intercepted by your security system.');
+}
 
     #[Route('/logout', name: 'app_logout')]
     public function logout(): void
