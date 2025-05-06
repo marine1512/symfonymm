@@ -36,7 +36,7 @@ security:
         - { path: ^/login$, roles: IS_AUTHENTICATED_ANONYMOUSLY } # La page de login accessible à tous
         - { path: ^/logout, roles: IS_AUTHENTICATED_ANONYMOUSLY } # Logout accessible à tous
         - { path: ^/admin, roles: ROLE_ADMIN } # Les admins uniquement
-        - { path: ^/$, roles: ROLE_USER } # Par défaut, tout utilisateur connecté
+        - { path: ^/, roles: ROLE_USER } # Par défaut, tout utilisateur connecté
 
 when@test:
     security:
