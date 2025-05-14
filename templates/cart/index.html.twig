@@ -1,32 +1,42 @@
 {% extends 'base.html.twig' %}
 
-{% block body %}
-    <h1>Votre Panier</h1>
+{% block stylesheets %}
+{{ parent() }}
+   <link rel="stylesheet" href="{{ asset('css/shop/panier.css') }}?v=1.0">
+{% endblock %}
 
-    {% if cartItems is not empty %}
-        <table>
-            <thead>
-                <tr>
-                    <th>Produit</th>
-                    <th>Prix</th>
-                    <th>Quantité</th>
-                    <th>Sous-total</th>
-                </tr>
-            </thead>
-            <tbody>
-                {% for item in cartItems %}
-                    <tr>
-                        <td>{{ item.name }}</td>
-                        <td>{{ item.price }} €</td>
-                        <td>{{ item.quantity }}</td>
-                        <td>{{ item.price * item.quantity }} €</td>
-                    </tr>
-                {% endfor %}
-            </tbody>
-        </table>
-        <p><strong>Total : {{ total }} €</strong></p>
-        <button><a href="#">Passer la commande</a></button>
-    {% else %}
-        <p>Votre panier est vide.</p>
-    {% endif %}
+
+{% block body %}
+<h1>Votre Panier</h1>
+<table>
+    <thead>
+        <tr>
+            <th>Nom</th>
+            <th>Prix</th>
+            <th>Taille</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for item in cart %}
+            <tr>
+                <td>{{ item.name }}</td>
+                <td>{{ item.price }} €</td>
+                <td>{{ item.size }} €</td>
+            
+                <td>
+                    <form action="{{ path('cart_remove', { id: item.id }) }}" method="post">
+                        <button type="submit">Supprimer</button>
+                    </form>
+                </td>
+            </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+<p>Total : {{ totalPrice }} €</p>
+
+
+<form action="" method="post">
+    <button type="submit">Valider et Payer</button>
+</form>
 {% endblock %}
