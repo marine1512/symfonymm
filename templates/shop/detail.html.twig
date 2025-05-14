@@ -1,0 +1,43 @@
+{% extends 'base.html.twig' %}
+
+{% block stylesheets %}
+{{ parent() }}
+   <link rel="stylesheet" href="{{ asset('css/shop/shop-detail.css') }}?v=1.0">
+{% endblock %}
+
+{% block body %}
+    <div class="product-card2">
+        <img src="{{ asset(product.image) }}" alt="{{ product.name }}">
+        <div class="product-details">
+            <div class="detail">
+                <p>Nom :{{ product.name }}</p>
+                <p>Prix :{{ product.price }} €</p>    
+            </div>
+            <div class="taille">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Tailles</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>
+                                <select class="select" name="sizes[]" multiple size="5">
+                                    <option value="XS">XS</option>
+                                    <option value="S">S</option>
+                                    <option value="M">M</option>
+                                    <option value="L">L</option>
+                                    <option value="XL">XL</option>
+                                </select>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <form mehod="post" action="#">
+                <button>Ajouter au panier</button>
+            </form>
+        </div>            
+    </div>
+{% endblock %}

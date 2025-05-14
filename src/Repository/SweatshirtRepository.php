@@ -16,28 +16,28 @@ class SweatshirtRepository extends ServiceEntityRepository
         parent::__construct($registry, Sweatshirt::class);
     }
 
-    //    /**
-    //     * @return Sweatshirt[] Returns an array of Sweatshirt objects
-    //     */
-    //    public function findByExampleField($value): array
-    //    {
-    //        return $this->createQueryBuilder('s')
-    //            ->andWhere('s.exampleField = :val')
-    //            ->setParameter('val', $value)
-    //            ->orderBy('s.id', 'ASC')
-    //            ->setMaxResults(10)
-    //            ->getQuery()
-    //            ->getResult()
-    //        ;
-    //    }
+    /**
+     * Retourne une liste de sweat-shirts promus.
+     *
+     * @return Sweatshirt[]
+     */
+    public function findPromotedSweatshirts(): array
+    {
+        return $this->createQueryBuilder('s')
+            ->andWhere('s.isPromoted = :promoted')
+            ->setParameter('promoted', true)
+            ->orderBy('s.id', 'ASC')
+            ->getQuery()
+            ->getResult();
+    }
 
-    //    public function findOneBySomeField($value): ?Sweatshirt
-    //    {
-    //        return $this->createQueryBuilder('s')
-    //            ->andWhere('s.exampleField = :val')
-    //            ->setParameter('val', $value)
-    //            ->getQuery()
-    //            ->getOneOrNullResult()
-    //        ;
-    //    }
+    public function findByPriceRange(float $minPrice, float $maxPrice)
+{
+    return $this->createQueryBuilder('p')
+        ->andWhere('p.price BETWEEN :minPrice AND :maxPrice')
+        ->setParameter('minPrice', $minPrice)
+        ->setParameter('maxPrice', $maxPrice)
+        ->getQuery()
+        ->getResult();
+}
 }

@@ -3,22 +3,27 @@
 {% block title %}Accueil{% endblock %}
 
 {% block stylesheets %}
-    <link rel="stylesheet" href="{{ asset('css/style.css') }}">
+{{ parent() }}
+   <link rel="stylesheet" href="{{ asset('css/home.css') }}?v=1.0">
 {% endblock %}
 
 {% block body %}
-    <h1>Bienvenue sur notre site</h1>
-    <p>Découvrez nos derniers produits et l’esprit de notre marque !</p>
-
-    <h2>Nos sweat-shirts mis en avant</h2>
-    <ul>
-        {% for product in featuredProducts %}
-            <li>
-                <strong>{{ product.name }}</strong> - {{ product.price }} €
-                {% if user %}
-                    <button><a href="#">Voir</a></button>
-                {% endif %}
-            </li>
-        {% endfor %}
-    </ul>
+   <h1>Nos bestSellers</h1>
+<section class="products-section">
+    {% for product in promotedProducts %}
+    <div class="product-card">
+        {% if product.image %}
+        <img src="{{ asset(product.image) }}" alt="Image de {{ product.name }}" class="product-image"/>
+        {% endif %}
+        <div class="product-details">
+            <div class="name">
+                <h2>{{ product.name }}</h2>
+                <p class="product-price">{{ product.price }} €</p>
+            </div>      
+            <a href="{{ path('product_detail', { id: product.id }) }}"><button class='detail'>Voir</button></a>
+        </div>            
+   
+    </div>
+    {% endfor %}
+</section>
 {% endblock %}

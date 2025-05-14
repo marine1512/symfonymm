@@ -9,7 +9,7 @@ security:
         app_user_provider:
             entity:
                 class: App\Entity\User
-                property: email
+                property: username # Utiliser le champ "username" pour l'authentification
 
     # Configuration des firewalls
     firewalls:
@@ -33,10 +33,12 @@ security:
                 target: app_login
     # Contrôle des accès en fonction des rôles
     access_control:
-        - { path: ^/login$, roles: IS_AUTHENTICATED_ANONYMOUSLY } # La page de login accessible à tous
-        - { path: ^/logout, roles: IS_AUTHENTICATED_ANONYMOUSLY } # Logout accessible à tous
+        - { path: ^/, roles: PUBLIC_ACCESS } # La page de home accessible à tous
+        - { path: ^/login, roles: PUBLIC_ACCESS } # La page de login accessible à tous
+        - { path: ^/logout, roles: PUBLIC_ACCESS } # Logout accessible à tous
+        - { path: ^/register, roles: PUBLIC_ACCESS } 
         - { path: ^/admin, roles: ROLE_ADMIN } # Les admins uniquement
-        - { path: ^/, roles: ROLE_USER } # Par défaut, tout utilisateur connecté
+        - { path: ^/home, roles: ROLE_USER } # Par défaut, tout utilisateur connecté
 
 when@test:
     security:

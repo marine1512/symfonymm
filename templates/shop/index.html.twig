@@ -1,15 +1,42 @@
 {% extends 'base.html.twig' %}
 
+{% block stylesheets %}
+{{ parent() }}
+   <link rel="stylesheet" href="{{ asset('css/shop/shop-list.css') }}?v=1.0">
+{% endblock %}
+
 {% block body %}
-    <h1>Notre Boutique</h1>
-    <ul>
-        {% for product in products %}
-            <li>
-                <h3>{{ product.name }}</h3>
-                <p>{{ product.description }}</p>
-                <strong>{{ product.price }} €</strong>
-                <button><a href="#">Ajouter au panier</a></button>
-            </li>
-        {% endfor %}
-    </ul>
+<h1>Liste des produits</h1>
+<div class="filtre"> 
+    <form method="get" action="{{ path('shop') }}">
+        <label for="priceRange">Fourchette de prix</label>
+        <select name="priceRange" id="priceRange">
+            <option value="">Tous</option>
+            <option value="10-29" {% if priceRange == '10-29' %}selected{% endif %}>10 - 29 €</option>
+            <option value="29-35" {% if priceRange == '29-35' %}selected{% endif %}>29 - 35 €</option>
+            <option value="35-50" {% if priceRange == '35-50' %}selected{% endif %}>35 - 50 €</option>
+        </select>
+        <button class="btn" type="submit">Appliquer</button>
+    </form>
+
+    <div class="produit">
+        <section class="products-section">
+            {% for product in products %}
+            <div class="product-card">
+                {% if product.image %}
+                <img src="{{ asset(product.image) }}" alt="Image de {{ product.name }}" class="product-image"/>
+                {% endif %}
+                <div class="product-details">
+                    <div class="name">
+                        <h2>{{ product.name }}</h2>
+                        <p class="product-price">{{ product.price }} €</p>
+                    </div>      
+                    <a href="{{ path('product_detail', { id: product.id }) }}"><button class='detail'>Voir</button></a>
+                </div>            
+            </div>
+            {% endfor %}
+        </section>
+    </div>
+</div>
+
 {% endblock %}

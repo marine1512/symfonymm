@@ -11,7 +11,7 @@ use Symfony\Component\Security\Core\User\UserInterface;
 
 #[ORM\Entity(repositoryClass: UserRepository::class)]
 #[ORM\Table(name: 'user')]
-#[UniqueEntity(fields: ['username'], message: 'There is already an account with this username')]
+#[UniqueEntity(fields: ['username'], message: 'Il existe déjà un compte avec cet identifiant.')]
 class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
     #[ORM\Id]
@@ -22,6 +22,12 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(length: 180, unique: true)]
     private ?string $username = null;
 
+    #[ORM\Column(length: 180, unique: true)]
+    private ?string $email = null;
+
+    #[ORM\Column(type: Types::TEXT, nullable: true)]
+    private ?string $shippingAddress = null;
+
     #[ORM\Column(type: Types::JSON)]
     private array $roles = [];
 
@@ -31,24 +37,18 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column]
     private bool $isVerified = false;
 
-    // Méthodes générées automatiquement
+    // Getters et setters déjà présents, puis ajout des nouveaux :
 
     public function getId(): ?int
     {
         return $this->id;
     }
 
-    /**
-     * Retourne l'identifiant unique pour l'utilisateur (nouvelle méthode Symfony 5.3+).
-     */
     public function getUserIdentifier(): string
     {
-        return $this->username; // Laissez votre champ unique ici (par exemple, email ou username)
+        return $this->email; // Utiliser l'email comme identifiant unique
     }
 
-    /**
-     * Retourne le champ `username` (soutien à la méthode dépréciée).
-     */
     public function getUsername(): ?string
     {
         return $this->username;
@@ -61,10 +61,33 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
+    public function getEmail(): ?string
+    {
+        return $this->email;
+    }
+
+    public function setEmail(string $email): self
+    {
+        $this->email = $email;
+
+        return $this;
+    }
+
+    public function getShippingAddress(): ?string
+    {
+        return $this->shippingAddress;
+    }
+
+    public function setShippingAddress(?string $shippingAddress): self
+    {
+        $this->shippingAddress = $shippingAddress;
+
+        return $this;
+    }
+
     public function getRoles(): array
     {
         $roles = $this->roles;
-        // Garantir que tous les utilisateurs ont au moins ROLE_USER
         $roles[] = 'ROLE_USER';
 
         return array_unique($roles);
@@ -89,13 +112,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
-    /**
-     * Nettoyez les données temporaires sensibles.
-     */
     public function eraseCredentials(): void
     {
-        // Exemple : Nettoyez une propriété temporaire utilisée pour le mot de passe
-        // $this->plainPassword = null;
+        // Nettoyer tout champ sensible ici si nécessaire
     }
 
     public function isVerified(): bool
@@ -103,7 +122,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this->isVerified;
     }
 
-    public function setIsVerified(bool $isVerified): static
+    public function setIsVerified(bool $isVerified): self
     {
         $this->isVerified = $isVerified;
 

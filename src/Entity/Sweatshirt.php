@@ -24,6 +24,9 @@ class Sweatshirt
     #[ORM\Column(type: 'json')] // Stocke les tailles avec un format JSON
     private array $stockBySize = [];
 
+    #[ORM\Column(type: 'string', length: 255, nullable: true)]
+    private ?string $image = null; // Nouvel attribut image
+
     // Getters et Setters
 
     public function getId(): ?int
@@ -72,6 +75,16 @@ class Sweatshirt
     public function setStockBySize(array $stockBySize): self
     {
         $this->stockBySize = $stockBySize;
+        return $this;
+    }
+    public function getImage(): ?string
+    {
+        return $this->image;
+    }
+
+    public function setImage(?string $image): self
+    {
+        $this->image = $image;
         return $this;
     }
 }

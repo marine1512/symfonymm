@@ -2,14 +2,14 @@
 
 namespace App\Controller;
 
+use App\Repository\SweatshirtRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use App\Repository\SweatshirtRepository;
 
-class HomeController extends AbstractController
+final class AccueilController extends AbstractController
 {
-    #[Route('/home', name: 'home')]
+    #[Route('/', name: 'app_accueil')]
     public function index(SweatshirtRepository $sweatshirtRepository): Response
     {
         // Récupération des produits promus
@@ -18,10 +18,9 @@ class HomeController extends AbstractController
         // Vérification si l'utilisateur est connecté
         $isUserLoggedIn = $this->isGranted('IS_AUTHENTICATED_FULLY');
 
-        return $this->render('home/index.html.twig', [
+        return $this->render('accueil/index.html.twig', [
             'promotedProducts' => $promotedProducts,
             'isUserLoggedIn' => $isUserLoggedIn,
         ]);
     }
-
 }
