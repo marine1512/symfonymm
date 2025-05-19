@@ -7,36 +7,35 @@
 
 {% block body %}
 <h1>Liste des produits</h1>
-<div class="filtre"> 
-    <form method="get" action="{{ path('shop') }}">
-        <label for="priceRange">Fourchette de prix</label>
-        <select name="priceRange" id="priceRange">
-            <option value="">Tous</option>
-            <option value="10-29" {% if priceRange == '10-29' %}selected{% endif %}>10 - 29 €</option>
-            <option value="29-35" {% if priceRange == '29-35' %}selected{% endif %}>29 - 35 €</option>
-            <option value="35-50" {% if priceRange == '35-50' %}selected{% endif %}>35 - 50 €</option>
-        </select>
-        <button class="btn" type="submit">Appliquer</button>
-    </form>
+<div class="shop-container">
+    <aside class="filters-section">
+        <form method="get" action="{{ path('shop') }}">
+            <label for="priceRange">Fourchette de prix</label>
+            <select name="priceRange" id="priceRange" multiple size="4">
+                <option value="">Tous</option>
+                <option value="10-29" {% if priceRange == '10-29' %}selected{% endif %}>10 - 29 €</option>
+                <option value="29-35" {% if priceRange == '29-35' %}selected{% endif %}>29 - 35 €</option>
+                <option value="35-50" {% if priceRange == '35-50' %}selected{% endif %}>35 - 50 €</option>
+            </select>
+            <button class="btn" type="submit">Appliquer</button>
+        </form>
+    </aside>
 
-    <div class="produit">
-        <section class="products-section">
-            {% for product in products %}
-            <div class="product-card">
-                {% if product.image %}
-                <img src="{{ asset(product.image) }}" alt="Image de {{ product.name }}" class="product-image"/>
-                {% endif %}
-                <div class="product-details">
-                    <div class="name">
-                        <h2>{{ product.name }}</h2>
-                        <p class="product-price">{{ product.price }} €</p>
-                    </div>      
-                    <a href="{{ path('product_detail', { id: product.id }) }}"><button class='detail'>Voir</button></a>
-                </div>            
-            </div>
-            {% endfor %}
-        </section>
-    </div>
+    <section class="products-section">
+        {% for product in products %}
+        <div class="product-card">
+            {% if product.image %}
+            <img src="{{ asset(product.image) }}" alt="Image de {{ product.name }}" class="product-image"/>
+            {% endif %}
+            <div class="product-details">
+                <div class="name">
+                    <h2>{{ product.name }}</h2>
+                    <p class="product-price">{{ product.price }} €</p>
+                </div>      
+                <a href="{{ path('product_detail', { id: product.id }) }}"><button>Voir</button></a>
+            </div>            
+        </div>
+        {% endfor %}
+    </section>
 </div>
-
 {% endblock %}

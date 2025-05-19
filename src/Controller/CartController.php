@@ -6,6 +6,10 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use App\Entity\Sweatshirt;
+use Doctrine\Persistence\ManagerRegistry;
+use App\Service\CartService;
+use App\Service\StripeService;
 
 class CartController extends AbstractController
 {
@@ -27,47 +31,114 @@ class CartController extends AbstractController
     }
 
     #[Route('/cart/add/{id}', name: 'cart_add', methods: ['POST'])]
-public function addToCart($id, Request $request): Response
-{
-    // Exemple de données mockées pour l'article (en vrai, récupéré depuis la base de données)
-    $product = [
-        'id' => $id,
-        'name' => 'Produit ' . $id,
-        'price' => 20, // Exemple de prix
-        'quantity' => 1,
-    ];
+    public function addToCart($id, Request $request, ManagerRegistry $doctrine): Response
+    {
+        // Récupérer le produit depuis la base de données via Doctrine
+        $product = $doctrine->getRepository(Sweatshirt::class)->find($id);
 
-    // Récupérer le panier en session
-    $session = $request->getSession();
-    $cart = $session->get('cart', []);
+        // Vérifiez si le produit existe
+        if (!$product) {
+            $this->addFlash('error', 'Produit non trouvé.');
+            return $this->redirectToRoute('product_list'); // Redirection personnalisée
+        }
 
-    // Logic pour vérifier si l'article est déjà dans le panier
-    if (isset($cart[$id])) {
-        $cart[$id]['quantity'] += 1; // Si déjà présent, augmenter la quantité
-    } else {
-        $cart[$id] = $product; // Sinon, ajouter l'article au panier
+        // Récupération de la taille sélectionnée depuis le formulaire
+        $size = $request->request->get('size');
+
+        // Vérification de la taille et du stock
+        $stockBySize = $product->getStockBySize();
+        if (!isset($stockBySize[$size]) || $stockBySize[$size] <= 0) {
+            $this->addFlash('error', 'Taille invalide ou stock épuisé.');
+            return $this->redirectToRoute('product_detail', ['id' => $product->getId()]);
+        }
+
+        // Gestion du panier
+        $session = $request->getSession();
+        $cart = $session->get('cart', []);
+
+        // Identifier l'article dans le panier (ID et taille)
+        $itemKey = $id . '-' . $size;
+
+        // Ajouter ou mettre à jour la quantité dans le panier
+        if (isset($cart[$itemKey])) {
+            $cart[$itemKey]['quantity'] += 1;
+        } else {
+            $cart[$itemKey] = [
+                'id' => $product->getId(),
+                'image' => $product->getImage(),
+                'name' => $product->getName(),
+                'price' => $product->getPrice(),
+                'size' => $size,
+                'quantity' => 1,
+            ];
+        }
+
+        // Sauvegarder le panier dans la session
+        $session->set('cart', $cart);
+
+        $this->addFlash('success', 'Produit ajouté au panier avec succès.');
+        return $this->redirectToRoute('cart'); // Redirection vers la page du panier
     }
-
-    // Stocker le panier mis à jour dans la session
-    $session->set('cart', $cart);
-
-    return $this->redirectToRoute('cart');
-}
     
     #[Route('/cart/remove/{id}', name: 'cart_remove', methods: ['POST'])]
-public function removeFromCart($id, Request $request): Response
-{
-    $session = $request->getSession();
-    $cart = $session->get('cart', []);
+    public function removeFromCart($id, Request $request): Response
+    {
+        // Gestion du panier depuis la session
+        $session = $request->getSession();
+        $cart = $session->get('cart', []); // Récupération du panier depuis la session
+    
+        // Vérifier si l'article (par sa clé) existe dans le panier
+        if (isset($cart[$id])) {
+            unset($cart[$id]); // Supprimer l'article
+        }
+    
+        // Sauvegarder les modifications dans la session
+        $session->set('cart', $cart);
+    
+        $this->addFlash('success', 'Produit retiré du panier avec succès.');
+        return $this->redirectToRoute('cart'); // Redirige vers la page du panier
+    }
+    #[Route('/checkout', name: 'app_checkout')]
+    public function checkout(CartService $cartService, StripeService $stripeService): Response
+    {
+        $cart = $cartService->getFullCart();
+        if (empty($cart)) {
+            return $this->redirectToRoute('app_cart_show');
+        }
 
-    // Supprimer l'article si présent
-    if (isset($cart[$id])) {
-        unset($cart[$id]);
+        foreach ($cart as $item) {
+            $cartItems[] = [
+                'price_data' => [
+                    'product_data' => [
+                        'name' => $item['product']->getName(),
+                    ],
+                    'unit_amount' => $item['product']->getPrice(), // le prix doit être en centimes pour Stripe, multipliez par 100 si vous l'avez stocké en euros
+                ],
+                'quantity' => $item['quantity'],
+            ];
+        }
+
+        $session = $stripeService->createCheckoutSession(
+            $cartItems,
+            $this->generateUrl('payment_success', [], false),
+            $this->generateUrl('payment_cancel', [], false)
+        );
+
+        return $this->redirect($session->url, 303);
     }
 
-    $session->set('cart', $cart);
+    #[Route('/success', name: 'payment_success')]
+    public function success(CartService $cartService): Response
+    {
+        $cartService->clear();
+        $this->addFlash('success', 'Votre paiement a été effectué avec succès !');
+        return $this->redirectToRoute('app_home');
+    }
 
-    return $this->redirectToRoute('cart');
-}
-
+    #[Route('/cancel', name: 'payment_cancel')]
+    public function cancel(): Response
+    {
+        $this->addFlash('error', 'Votre paiement a été annulé.');
+        return $this->redirectToRoute('app_cart_show');
+    }
 }
