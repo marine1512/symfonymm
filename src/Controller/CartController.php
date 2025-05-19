@@ -105,25 +105,22 @@ class CartController extends AbstractController
         if (empty($cart)) {
             return $this->redirectToRoute('app_cart_show');
         }
-
+    
+        $cartItems = [];
         foreach ($cart as $item) {
             $cartItems[] = [
-                'price_data' => [
-                    'product_data' => [
-                        'name' => $item['product']->getName(),
-                    ],
-                    'unit_amount' => $item['product']->getPrice(), // le prix doit être en centimes pour Stripe, multipliez par 100 si vous l'avez stocké en euros
-                ],
-                'quantity' => $item['quantity'],
+                'product' => $item['product'], // Produit en entier
+                'quantity' => $item['quantity'], // Quantité spécifiée
             ];
         }
-
+    
         $session = $stripeService->createCheckoutSession(
             $cartItems,
-            $this->generateUrl('payment_success', [], false),
-            $this->generateUrl('payment_cancel', [], false)
+            $this->generateUrl('payment_success', [], true), // Génère une URL absolue
+            $this->generateUrl('payment_cancel', [], true)  // Génère une URL absolue
         );
-
+    
+        // Redirige l'utilisateur vers l'URL de la session Stripe
         return $this->redirect($session->url, 303);
     }
 

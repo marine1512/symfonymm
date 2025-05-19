@@ -19,24 +19,30 @@ class StripeService
         string $successUrl,
         string $cancelUrl
     ): StripeSession {
-        $lineItems = [];
-        dump($cartItems);
-
+        $lineItems = []; // Tableau pour Stripe
+    
         foreach ($cartItems as $cartItem) {
-            dd($cartItem);
+            // Validation des données du produit
+            if (!isset($cartItem['product'], $cartItem['quantity'])) {
+                throw new \InvalidArgumentException('Les informations du produit sont invalides');
+            }
+    
+            $product = $cartItem['product']; // Produit
+            $quantity = $cartItem['quantity']; // Quantité
+    
             $lineItems[] = [
                 'price_data' => [
-                    'currency' => 'eur',
+                    'currency' => 'eur', // La devise doit être spécifiée
                     'product_data' => [
-                        'name' => $cartItem['product']->getName(),
+                        'name' => $product->getName(), // Nom du produit
                     ],
-                    'unit_amount' => $cartItem['product']->getPrice(),
+                    'unit_amount' => $product->getPrice() * 100, // Convertir en centimes
                 ],
-                'quantity' => $cartItem['quantity'],
+                'quantity' => $quantity, // Quantité spécifiée
             ];
         }
-        dd($successUrl, $cancelUrl);
-
+    
+        // Crée la session de paiement Stripe
         return StripeSession::create([
             'payment_method_types' => ['card'],
             'line_items' => $lineItems,
