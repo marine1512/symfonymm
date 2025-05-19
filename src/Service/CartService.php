@@ -6,7 +6,7 @@ use App\Repository\SweatshirtRepository;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 
-class CartService
+class CartService 
 {
     public function __construct(
         private RequestStack $requestStack,

@@ -7,7 +7,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 use App\Repository\SweatshirtRepository;
-
+ 
 class ShopController extends AbstractController
 {
     #[Route('/products', name: 'shop')]

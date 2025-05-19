@@ -97,7 +97,7 @@ class CartController extends AbstractController
     
         $this->addFlash('success', 'Produit retiré du panier avec succès.');
         return $this->redirectToRoute('cart'); // Redirige vers la page du panier
-    }
+    } 
     #[Route('/checkout', name: 'app_checkout')]
     public function checkout(CartService $cartService, StripeService $stripeService): Response
     {

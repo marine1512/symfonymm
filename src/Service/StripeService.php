@@ -6,7 +6,7 @@ use Stripe\Stripe;
 use Stripe\Checkout\Session as StripeSession;
 
 
-class StripeService
+class StripeService 
 {
     public function __construct(
         private string $stripeApiSecret,
