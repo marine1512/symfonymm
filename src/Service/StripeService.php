@@ -6,7 +6,7 @@ use Stripe\Stripe;
 use Stripe\Checkout\Session as StripeSession;
 
 
-class StripeService 
+class StripeService
 {
     public function __construct(
         private string $stripeApiSecret,
@@ -19,30 +19,29 @@ class StripeService
         string $successUrl,
         string $cancelUrl
     ): StripeSession {
-        $lineItems = []; // Tableau pour Stripe
+        $lineItems = [];
     
         foreach ($cartItems as $cartItem) {
-            // Validation des données du produit
-            if (!isset($cartItem['product'], $cartItem['quantity'])) {
+            // Validation des données nécessaires
+            if (!isset($cartItem['price_data'], $cartItem['quantity'])) {
                 throw new \InvalidArgumentException('Les informations du produit sont invalides');
             }
     
-            $product = $cartItem['product']; // Produit
-            $quantity = $cartItem['quantity']; // Quantité
-    
+            $priceData = $cartItem['price_data'];
             $lineItems[] = [
                 'price_data' => [
-                    'currency' => 'eur', // La devise doit être spécifiée
+                    'currency' => $priceData['currency'],
                     'product_data' => [
-                        'name' => $product->getName(), // Nom du produit
+                        'name' => $priceData['product_data']['name'], // Nom du produit
                     ],
-                    'unit_amount' => $product->getPrice() * 100, // Convertir en centimes
+                    // Conversion explicite du prix en INT
+                    'unit_amount' => (int) $priceData['unit_amount'],
                 ],
-                'quantity' => $quantity, // Quantité spécifiée
+                'quantity' => (int) $cartItem['quantity'], // Conversion explicitement en INT
             ];
         }
     
-        // Crée la session de paiement Stripe
+        // Crée une session Stripe
         return StripeSession::create([
             'payment_method_types' => ['card'],
             'line_items' => $lineItems,

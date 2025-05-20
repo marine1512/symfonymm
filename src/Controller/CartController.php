@@ -98,29 +98,34 @@ class CartController extends AbstractController
         $this->addFlash('success', 'Produit retiré du panier avec succès.');
         return $this->redirectToRoute('cart'); // Redirige vers la page du panier
     } 
+
     #[Route('/checkout', name: 'app_checkout')]
     public function checkout(CartService $cartService, StripeService $stripeService): Response
     {
         $cart = $cartService->getFullCart();
         if (empty($cart)) {
-            return $this->redirectToRoute('app_cart_show');
+            return $this->redirectToRoute('cart');
         }
-    
-        $cartItems = [];
+
         foreach ($cart as $item) {
             $cartItems[] = [
-                'product' => $item['product'], // Produit en entier
-                'quantity' => $item['quantity'], // Quantité spécifiée
+                'price_data' => [
+                    'currency' => 'eur',
+                    'product_data' => [
+                        'name' => $item['product']->getName(),
+                    ],
+                    'unit_amount' => (int) ($item['product']->getPrice() * 100),  // Prix en centimes
+                ],
+                'quantity' => $item['quantity'],
             ];
         }
-    
+
         $session = $stripeService->createCheckoutSession(
             $cartItems,
-            $this->generateUrl('payment_success', [], true), // Génère une URL absolue
-            $this->generateUrl('payment_cancel', [], true)  // Génère une URL absolue
+            $this->generateUrl('payment_success', [], false),
+            $this->generateUrl('payment_cancel', [], false)
         );
-    
-        // Redirige l'utilisateur vers l'URL de la session Stripe
+
         return $this->redirect($session->url, 303);
     }
 
@@ -129,13 +134,13 @@ class CartController extends AbstractController
     {
         $cartService->clear();
         $this->addFlash('success', 'Votre paiement a été effectué avec succès !');
-        return $this->redirectToRoute('app_home');
+        return $this->redirectToRoute('home');
     }
 
     #[Route('/cancel', name: 'payment_cancel')]
     public function cancel(): Response
     {
         $this->addFlash('error', 'Votre paiement a été annulé.');
-        return $this->redirectToRoute('app_cart_show');
+        return $this->redirectToRoute('cart');
     }
 }
