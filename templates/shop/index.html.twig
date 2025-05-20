@@ -11,13 +11,12 @@
     <aside class="filters-section">
         <form method="get" action="{{ path('shop') }}">
             <label for="priceRange">Fourchette de prix</label>
-            <select name="priceRange" id="priceRange" multiple size="4">
+            <select name="priceRange" id="priceRange" size="4" onchange="this.form.submit()">
                 <option value="">Tous</option>
                 <option value="10-29" {% if priceRange == '10-29' %}selected{% endif %}>10 - 29 €</option>
                 <option value="29-35" {% if priceRange == '29-35' %}selected{% endif %}>29 - 35 €</option>
                 <option value="35-50" {% if priceRange == '35-50' %}selected{% endif %}>35 - 50 €</option>
             </select>
-            <button class="btn" type="submit">Appliquer</button>
         </form>
     </aside>
 

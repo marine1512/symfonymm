@@ -1,9 +1,11 @@
 body{
     background-color: rgb(255, 255, 255);
     font-family: Arial, sans-serif;
+    height: 100%;
 }
 
 main{
+    flex: 1;
     padding-top: 1em;
 }
 

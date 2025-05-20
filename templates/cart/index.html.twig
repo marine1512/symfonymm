@@ -7,17 +7,6 @@
 
 {% block body %}
 <h1>Votre Panier</h1>
-<table>
-    <thead>
-        <tr>
-            <th></th>
-            <th>Nom</th>
-            <th>Prix</th>
-            <th>Taille</th>
-            <th>Actions</th>
-        </tr>
-    </thead>
-    <tbody>
         {% for key, item in cart %}
             {% for key, item in cart %}
     <div class="cart-item">
@@ -32,7 +21,7 @@
         <div class="cart-actions">
             <!-- Formulaire pour supprimer l'article -->
             <form action="{{ path('cart_remove', { id: key }) }}" method="post">
-                <button type="submit">Supprimer</button>
+                <button type="submit">RETIRER DU PANIER</button>
             </form>
         </div>
     </div>
@@ -40,12 +29,14 @@
     <p>Votre panier est vide.</p>
 {% endfor %}
         {% endfor %}
-    </tbody>
-</table>
- 
-<p>Total : {{ totalPrice }} €</p>
 
-{% if cart is not empty %}
-    <a href="{{ path('app_checkout')}}" class="btn btn-primary">Payer avec Stripe</a>
-{% endif %}
+<div class='cart'>
+    <p>TOTAL : {{ totalPrice }} €</p>
+    <div class="boutons">
+        {% if cart is not empty %}
+            <a class='btn' href="{{ path('app_checkout')}}" class="btn btn-primary">FINALISER MA COMMANDE</a>
+            <a class='btn2' href="{{ path('shop')}}" class="btn btn-primary">CONTINUER MES ACHATS</a>
+        {% endif %}
+    </div>
+</div>
 {% endblock %}
