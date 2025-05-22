@@ -27,18 +27,17 @@ class ImportSweatshirtsCommand extends Command
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $io = new SymfonyStyle($input, $output);
-
         $sweatshirts = [
-            ['name' => 'Blackbelt', 'price' => 29.90, 'isPromoted' => false],
-            ['name' => 'Bluebelt', 'price' => 29.90, 'isPromoted' => false],
-            ['name' => 'Street', 'price' => 34.50, 'isPromoted' => false],
-            ['name' => 'Pokeball **', 'price' => 45, 'isPromoted' => true],
-            ['name' => 'PinkLady', 'price' => 29.90, 'isPromoted' => false],
-            ['name' => 'Snow', 'price' => 32, 'isPromoted' => false],
-            ['name' => 'Greyback', 'price' => 28.50, 'isPromoted' => false],
-            ['name' => 'BlueCloud', 'price' => 45, 'isPromoted' => false],
-            ['name' => 'BornInUsa **', 'price' => 59.90, 'isPromoted' => true],
-            ['name' => 'GreenSchool', 'price' => 42.20, 'isPromoted' => false],
+            ['name' => 'Blackbelt', 'price' => 29.90, 'isPromoted' => false, 'image' => 'images/1.jpeg'],
+            ['name' => 'Bluebelt', 'price' => 29.90, 'isPromoted' => false, 'image' => 'images/2.jpeg'],
+            ['name' => 'Street', 'price' => 34.50, 'isPromoted' => false, 'image' => 'images/3.jpeg'],
+            ['name' => 'Pokeball **', 'price' => 45, 'isPromoted' => true, 'image' => 'images/4.jpeg'],
+            ['name' => 'PinkLady', 'price' => 29.90, 'isPromoted' => false, 'image' => 'images/5.jpeg'],
+            ['name' => 'Snow', 'price' => 32, 'isPromoted' => false, 'image' => 'images/6.jpeg'],
+            ['name' => 'Greyback', 'price' => 28.50, 'isPromoted' => false, 'image' => 'images/7.jpeg'],
+            ['name' => 'BlueCloud', 'price' => 45, 'isPromoted' => false, 'image' => 'images/8.jpeg'],
+            ['name' => 'BornInUsa **', 'price' => 59.90, 'isPromoted' => true, 'image' => 'images/9.jpeg'],
+            ['name' => 'GreenSchool', 'price' => 42.20, 'isPromoted' => false, 'image' => 'images/10.jpeg'],
         ];
 
         foreach ($sweatshirts as $data) {
@@ -49,6 +48,7 @@ class ImportSweatshirtsCommand extends Command
             $sweatshirt->setStockBySize([
                 'XS' => 2, 'S' => 2, 'M' => 2, 'L' => 2, 'XL' => 2,
             ]);
+            $sweatshirt->setImage($data['image']);
 
             $this->entityManager->persist($sweatshirt);
         }

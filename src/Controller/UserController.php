@@ -16,41 +16,62 @@ class UserController extends AbstractController
         EntityManagerInterface $entityManager,
         UserPasswordHasherInterface $passwordHasher
     ): JsonResponse {
-        // Créer une nouvelle instance de User
+        // Vérifier si un utilisateur admin existe déjà
+        $existingAdmin = $entityManager->getRepository(User::class)
+            ->findOneBy(['username' => 'admin']);
+    
+        if ($existingAdmin) {
+            return $this->json([
+                'error' => 'Un administrateur existe déjà.'
+            ], 400);
+        }
+    
+        // Création d'un nouvel utilisateur
         $user = new User();
         $user->setUsername('admin');
+        $user->setEmail('admin@example.com'); // Ajoutez un email (obligatoire si unique)
         $user->setRoles(['ROLE_ADMIN']);
-
-        // Hacher le mot de passe
-        $hashedPassword = $passwordHasher->hashPassword($user, 'admin'); 
+        
+        // Hachage du mot de passe
+        $hashedPassword = $passwordHasher->hashPassword($user, 'admin');
         $user->setPassword($hashedPassword);
-
-        // Persister l'utilisateur dans la base de données
+    
+        // Sauvegarder dans la base de données
         $entityManager->persist($user);
         $entityManager->flush();
-
-        // Retourner une réponse (facultatif, utile pour l'API REST)
-        return $this->json(['message' => 'Utilisateur créé avec succès']);
+    
+        return $this->json(['message' => 'Utilisateur admin créé avec succès']);
     }
 
     #[Route('/create-client', name: 'create_client', methods: ['POST'])]
-public function createClient(
-    EntityManagerInterface $entityManager,
-    UserPasswordHasherInterface $passwordHasher
-): JsonResponse {
-    // Créer un utilisateur client
-    $user = new User();
-    $user->setUsername('client'); // Nom d'utilisateur
-    $user->setRoles(['ROLE_CLIENT']); // Définir le rôle client
-
-    // Hacher le mot de passe
-    $hashedPassword = $passwordHasher->hashPassword($user, 'client');
-    $user->setPassword($hashedPassword);
-
-    // Sauvegarder l'utilisateur dans la base de données
-    $entityManager->persist($user);
-    $entityManager->flush();
-
-    return $this->json(['message' => 'Utilisateur client créé avec succès']);
-}
+    public function createClient(
+        EntityManagerInterface $entityManager,
+        UserPasswordHasherInterface $passwordHasher
+    ): JsonResponse {
+        // Vérifier si l'utilisateur existe déjà
+        $existingClient = $entityManager->getRepository(User::class)
+            ->findOneBy(['username' => 'client']);
+    
+        if ($existingClient) {
+            return $this->json([
+                'error' => 'Un utilisateur avec ce nom existe déjà.'
+            ], 400);
+        }
+    
+        // Créer un nouveau client
+        $user = new User();
+        $user->setUsername('client'); // Nom d'utilisateur
+        $user->setEmail('client@example.com'); // Email fictif ou dynamique
+        $user->setRoles(['ROLE_CLIENT']);
+    
+        // Hachage du mot de passe
+        $hashedPassword = $passwordHasher->hashPassword($user, 'client');
+        $user->setPassword($hashedPassword);
+    
+        // Persist et flush
+        $entityManager->persist($user);
+        $entityManager->flush();
+    
+        return $this->json(['message' => 'Utilisateur client créé avec succès']);
+    }
 }
