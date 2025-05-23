@@ -8,7 +8,6 @@
 {% block body %}
 <h1>Votre Panier</h1>
         {% for key, item in cart %}
-            {% for key, item in cart %}
     <div class="cart-item">
         <div class="cart-image">
             <img src="{{ asset(item.image) }}" alt="{{ item.name }}">
@@ -25,10 +24,9 @@
             </form>
         </div>
     </div>
-{% else %}
-    <p>Votre panier est vide.</p>
-{% endfor %}
-        {% endfor %}
+    {% else %}
+        <p class="vide">Votre panier est vide.</p>
+    {% endfor %}
 
 <div class='cart'>
     <p>TOTAL : {{ totalPrice }} €</p>
