@@ -56,13 +56,13 @@ nav ul li a:focus {
 .site-footer {
     background-color: #222222c4;
     color: #fff; 
-    text-align: center;
     padding: 20px; 
     border-top: 5px solid red; 
     font-size: 14px; 
 }
 
 .site-footer p {
+    text-align: center;
     margin: 10px 0; 
     line-height: 1.6; 
 }
@@ -76,5 +76,10 @@ nav ul li a:focus {
 .site-footer .slogan {
     font-style: italic; 
     color: red; 
+}
+
+.site-footer a{
+    color: #ffffff; 
+    text-align: end; 
 }
 

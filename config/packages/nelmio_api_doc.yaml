@@ -1,0 +1,13 @@
+nelmio_api_doc:
+    documentation:
+        info:
+            title: API Documentation
+            description: Documentation des APIs publiques.
+            version: 1.0.0
+            
+    areas:
+        path_patterns:
+            # Inclure uniquement les routes API
+            - ^/api
+            # Ignorer tout ce qui commence par `/_`
+            - ^/(?!_)

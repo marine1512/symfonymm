@@ -29,7 +29,7 @@ class UserController extends AbstractController
         // Création d'un nouvel utilisateur
         $user = new User();
         $user->setUsername('admin');
-        $user->setEmail('admin@example.com'); // Ajoutez un email (obligatoire si unique)
+        $user->setEmail('admin@example.com'); 
         $user->setRoles(['ROLE_ADMIN']);
         
         // Hachage du mot de passe
@@ -60,8 +60,8 @@ class UserController extends AbstractController
     
         // Créer un nouveau client
         $user = new User();
-        $user->setUsername('client'); // Nom d'utilisateur
-        $user->setEmail('client@example.com'); // Email fictif ou dynamique
+        $user->setUsername('client'); 
+        $user->setEmail('client@example.com'); 
         $user->setRoles(['ROLE_CLIENT']);
     
         // Hachage du mot de passe

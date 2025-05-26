@@ -15,17 +15,17 @@ class Sweatshirt
     #[ORM\Column(type: 'string', length: 255)]
     private ?string $name = null;
 
-    #[ORM\Column(type: 'float')] // Vérifiez bien ce type
+    #[ORM\Column(type: 'float')] 
     private ?float $price = null;
 
     #[ORM\Column(type: 'boolean')]
     private ?bool $isPromoted = null;
 
-    #[ORM\Column(type: 'json')] // Stocke les tailles avec un format JSON
+    #[ORM\Column(type: 'json')] 
     private array $stockBySize = [];
 
     #[ORM\Column(type: 'string', length: 255, nullable: true)]
-    private ?string $image = null; // Nouvel attribut image
+    private ?string $image = null; 
 
     // Getters et Setters
 

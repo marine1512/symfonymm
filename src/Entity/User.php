@@ -46,7 +46,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     public function getUserIdentifier(): string
     {
-        return $this->email; // Utiliser l'email comme identifiant unique
+        return $this->email; 
     }
 
     public function getUsername(): ?string
@@ -114,7 +114,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     public function eraseCredentials(): void
     {
-        // Nettoyer tout champ sensible ici si nécessaire
+        
     }
 
     public function isVerified(): bool

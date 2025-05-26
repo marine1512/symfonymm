@@ -97,6 +97,6 @@ button a{
 }
 
 .reset-button {
-    all: unset; /* Réinitialise tous les styles (hérite seulement des règles par défaut de l'élément) */
-    cursor: pointer; /* Redéfinit un curseur si nécessaire */
+    all: unset; 
+    cursor: pointer; 
 }

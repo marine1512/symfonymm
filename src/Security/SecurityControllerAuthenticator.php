@@ -28,7 +28,7 @@ class SecurityControllerAuthenticator extends AbstractLoginFormAuthenticator
     public function authenticate(Request $request): Passport
     {
         // Récupère les valeurs soumises depuis les champs du formulaire (par défaut `_username` et `_password`)
-        $username = $request->request->get('username', ''); // Défaut : chaîne vide
+        $username = $request->request->get('username', '');
         $password = $request->request->get('password', '');
 
         // Vérifiez que l'identifiant est fourni. Sinon, affichez un message d'erreur personnalisé (optionnel).
@@ -38,8 +38,8 @@ class SecurityControllerAuthenticator extends AbstractLoginFormAuthenticator
 
         // Le "Passport" associe un utilisateur et les informations de son authentification
         return new Passport(
-            new UserBadge($username),                 // Identification de l’utilisateur
-            new PasswordCredentials($password)       // Vérification via le mot de passe
+            new UserBadge($username),                
+            new PasswordCredentials($password)      
         );
     }
 
@@ -48,7 +48,6 @@ class SecurityControllerAuthenticator extends AbstractLoginFormAuthenticator
      */
     protected function getLoginUrl(Request $request): string
     {
-        // La route "app_login" doit être définie dans votre fichier security.yaml comme route pour la connexion
         return $this->urlGenerator->generate('app_login');
     }
 
@@ -57,15 +56,11 @@ class SecurityControllerAuthenticator extends AbstractLoginFormAuthenticator
      */
     public function onAuthenticationSuccess(Request $request, TokenInterface $token, string $firewallName): RedirectResponse
     {
-        // Récupère les rôles de l'utilisateur connecté
         $roles = $token->getRoleNames();
 
-        // Si l'utilisateur est un administrateur, redirigez-le vers le tableau de bord admin
         if (in_array('ROLE_ADMIN', $roles, true)) {
             return new RedirectResponse($this->urlGenerator->generate('admin_dashboard'));
         }
-
-        // Sinon, redirigez vers la page d'accueil
         return new RedirectResponse($this->urlGenerator->generate('home'));
     }
 }

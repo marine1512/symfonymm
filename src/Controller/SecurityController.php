@@ -24,7 +24,6 @@ class SecurityController extends AbstractController
     #[Route(path: '/login_check', name: 'app_login_check')]
 public function loginCheck(): void
 {
-    // Ce processus est géré automatiquement par Symfony. Ne rien implémenter ici.
     throw new \LogicException('This method can be blank - it will be intercepted by your security system.');
 }
 
@@ -32,6 +31,5 @@ public function loginCheck(): void
     public function logout(): void
     {
         // Symfony gère automatiquement la déconnexion
-        // Vous pouvez ajouter une redirection ou un message flash si nécessaire
     }
 }

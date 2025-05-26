@@ -1,0 +1,48 @@
+{% extends 'base.html.twig' %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('css/admin/admin.css') }}?v=1.0">
+{% endblock %}
+
+{% block title %}Sweatshirt{% endblock %}
+
+{% block body %}
+    <h1>Sweatshirt index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Nom</th>
+                <th>Prix</th>
+                <th>Mis en avant</th>
+                <th>Tailles disponnibles</th>
+                <th>Image</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for sweatshirt in sweatshirts %}
+            <tr>
+                <td>{{ sweatshirt.id }}</td>
+                <td>{{ sweatshirt.name }}</td>
+                <td>{{ sweatshirt.price }}</td>
+                <td>{{ sweatshirt.isPromoted ? 'Yes' : 'No' }}</td>
+                <td>{{ sweatshirt.stockBySize ? sweatshirt.stockBySize|json_encode : '' }}</td>
+                <td>{{ sweatshirt.image }}</td>
+                <td>
+                    <a class="btn2" href="{{ path('admin_sweatshirt_show', {'id': sweatshirt.id}) }}">Voir</a>
+                    <a class="btn2" href="{{ path('admin_sweatshirt_edit', {'id': sweatshirt.id}) }}">Modifier</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="7">Auncun enregistrements trouvés</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a class="btn2" href="{{ path('admin_sweatshirt_new') }}">Ajouter</a>
+{% endblock %}

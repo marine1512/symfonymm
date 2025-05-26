@@ -22,7 +22,6 @@ class StripeService
         $lineItems = [];
     
         foreach ($cartItems as $cartItem) {
-            // Validation des données nécessaires
             if (!isset($cartItem['price_data'], $cartItem['quantity'])) {
                 throw new \InvalidArgumentException('Les informations du produit sont invalides');
             }
@@ -32,12 +31,11 @@ class StripeService
                 'price_data' => [
                     'currency' => $priceData['currency'],
                     'product_data' => [
-                        'name' => $priceData['product_data']['name'], // Nom du produit
+                        'name' => $priceData['product_data']['name'], 
                     ],
-                    // Conversion explicite du prix en INT
                     'unit_amount' => (int) $priceData['unit_amount'],
                 ],
-                'quantity' => (int) $cartItem['quantity'], // Conversion explicitement en INT
+                'quantity' => (int) $cartItem['quantity'], 
             ];
         }
     

@@ -10,8 +10,11 @@ use App\Entity\Sweatshirt;
 use Doctrine\Persistence\ManagerRegistry;
 use App\Service\CartService;
 use App\Service\StripeService;
+use OpenApi\Annotations as OA;
+
 
 class CartController extends AbstractController
+
 {
     #[Route('/cart', name: 'cart')]
     public function index(Request $request): Response
@@ -77,7 +80,7 @@ class CartController extends AbstractController
         $session->set('cart', $cart);
 
         $this->addFlash('success', 'Produit ajouté au panier avec succès.');
-        return $this->redirectToRoute('cart'); // Redirection vers la page du panier
+        return $this->redirectToRoute('cart'); 
     }
     
     #[Route('/cart/remove/{id}', name: 'cart_remove', methods: ['POST'])]
@@ -85,20 +88,43 @@ class CartController extends AbstractController
     {
         // Gestion du panier depuis la session
         $session = $request->getSession();
-        $cart = $session->get('cart', []); // Récupération du panier depuis la session
+        $cart = $session->get('cart', []); 
     
         // Vérifier si l'article (par sa clé) existe dans le panier
         if (isset($cart[$id])) {
-            unset($cart[$id]); // Supprimer l'article
+            unset($cart[$id]);
         }
     
         // Sauvegarder les modifications dans la session
         $session->set('cart', $cart);
     
         $this->addFlash('success', 'Produit retiré du panier avec succès.');
-        return $this->redirectToRoute('cart'); // Redirige vers la page du panier
+        return $this->redirectToRoute('cart'); 
     } 
 
+        /**
+     * Créer une session de paiement avec Stripe.
+     *
+     * @Route("/checkout", name="app_checkout", methods={"POST"})
+     *
+     * @OA\Post(
+     *     path="/checkout",
+     *     summary="Créer une session Stripe",
+     *     tags={"Payment"},
+     *     description="Créé une session de paiement Stripe pour le contenu actuel du panier.",
+     *     @OA\Response(
+     *         response=303,
+     *         description="Redirige vers l'URL Stripe Checkout."
+     *     ),
+     *     @OA\Response(
+     *         response=400,
+     *         description="Erreur si le panier est vide.",
+     *         @OA\JsonContent(
+     *             @OA\Property(property="message", type="string", example="Votre panier est vide.")
+     *         )
+     *     )
+     * )
+     */
     #[Route('/checkout', name: 'app_checkout')]
     public function checkout(CartService $cartService, StripeService $stripeService): Response
     {
@@ -128,6 +154,7 @@ class CartController extends AbstractController
 
         return $this->redirect($session->url, 303);
     }
+
 
     #[Route('/success', name: 'payment_success')]
     public function success(CartService $cartService): Response

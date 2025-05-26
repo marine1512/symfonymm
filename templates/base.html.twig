@@ -11,7 +11,7 @@
         <ul>
             <li><a href="{{ path('home') }}">Accueil</a></li>
             <li><a href="{{ path('shop') }}">Boutique</a></li>
-            <li><a href="{{ path('cart') }}"">Panier</a></li>
+            <li><a href="{{ path('cart') }}">Panier</a></li>    
             <li><a href="{{ path('app_logout') }}">Se deconnecter</a></li>
         </ul>
     </nav>
@@ -20,9 +20,12 @@
         {% endblock %}
     </main>
 <footer class="site-footer">
-    <p class="company-name">Stubborn</p>
+    <h1 class="company-name">Stubborn</h1>
     <p class="address">Adresse : Piccadilly Circus, London W1J 0DA, Royaume-Uni</p>
     <p class="contact">Contact : stubborn@blabla.com</p>
     <p class="slogan">Don't compromise on your look</p>
+    {% if is_granted('ROLE_ADMIN') %}
+        <a href="{{ path('admin_sweatshirt_index') }}">Accès au tableau de bord administrateur</a>
+    {% endif %}    
 </footer>
 </html>

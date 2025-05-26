@@ -1,0 +1,18 @@
+{% extends 'base.html.twig' %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('css/admin/admin.css') }}?v=1.0">
+{% endblock %}
+
+{% block title %}Modifier un sweatshirt{% endblock %}
+
+{% block body %}
+    <h1>Modifier le sweatshirt : {{ sweatshirt.name }}</h1>
+
+    {{ form_start(form) }}
+        {{ form_widget(form) }}
+        <button class="btn2">Enregistrer</button>
+    {{ form_end(form) }}
+    <a class="btn2 mt-3" href="{{ path('admin_sweatshirt_index') }}">Retour au tableau de bord</a>
+{% endblock %}
