@@ -20,6 +20,7 @@ use OpenApi\Annotations as OA;
  */
 
 class CartController extends AbstractController
+{
     /**
      * Affiche le panier.
      * @OA\Get(
@@ -37,7 +38,6 @@ class CartController extends AbstractController
      *     )
      * )
      */
-{
     #[Route('/cart', name: 'cart', methods: ['GET'])]
     public function index(Request $request): Response
     {
@@ -179,7 +179,6 @@ class CartController extends AbstractController
     /**
      * Crée une session de paiement Stripe.
      *
-     * @Route("/checkout", name="app_checkout", methods={"POST"})
      *
      * @OA\Post(
      *     path="/checkout",
@@ -231,7 +230,6 @@ class CartController extends AbstractController
     /**
      * Confirmation de paiement réussi.
      *
-     * @Route("/success", name="payment_success", methods={"GET"})
      *
      * @OA\Get(
      *     path="/success",

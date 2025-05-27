@@ -3,7 +3,7 @@
     "info": {
         "title": "API Documentation",
         "description": "Documentation des APIs publiques.",
-        "version": "1.0.0"
+        "version": "3.0.0"
     },
     "paths": {
         "/": {
@@ -18,63 +18,8 @@
         },
         "/cart": {
             "get": {
+                "summary": "Affiche le panier.",
                 "operationId": "get_cart",
-                "responses": {
-                    "default": {
-                        "description": ""
-                    }
-                }
-            },
-            "put": {
-                "operationId": "put_cart",
-                "responses": {
-                    "default": {
-                        "description": ""
-                    }
-                }
-            },
-            "post": {
-                "operationId": "post_cart",
-                "responses": {
-                    "default": {
-                        "description": ""
-                    }
-                }
-            },
-            "delete": {
-                "operationId": "delete_cart",
-                "responses": {
-                    "default": {
-                        "description": ""
-                    }
-                }
-            },
-            "options": {
-                "operationId": "options_cart",
-                "responses": {
-                    "default": {
-                        "description": ""
-                    }
-                }
-            },
-            "head": {
-                "operationId": "head_cart",
-                "responses": {
-                    "default": {
-                        "description": ""
-                    }
-                }
-            },
-            "patch": {
-                "operationId": "patch_cart",
-                "responses": {
-                    "default": {
-                        "description": ""
-                    }
-                }
-            },
-            "trace": {
-                "operationId": "trace_cart",
                 "responses": {
                     "default": {
                         "description": ""
@@ -1226,6 +1171,5 @@
             }
         }
     },
-    "tags": [
-    ]
+    "tags": []
 }

@@ -8,6 +8,9 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 use OpenApi\Annotations as OA;
 
+/**
+ * @OA\Tag(name="Sécurité", description="Endpoints pour la gestion de la sécurité et de l'authentification.")
+ */
 class SecurityController extends AbstractController
 {
 

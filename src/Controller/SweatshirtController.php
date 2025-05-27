@@ -12,6 +12,10 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use OpenApi\Annotations as OA;
 
+/**
+ * @OA\Tag(name="Produits", description="Endpoints pour gérer les sweatshirts")
+ */
+
 #[Route('/admin', name: 'admin_sweatshirt_')]
 class SweatshirtController extends AbstractController
 {

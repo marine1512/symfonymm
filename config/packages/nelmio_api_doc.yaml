@@ -3,7 +3,7 @@ nelmio_api_doc:
         info:
             title: API Documentation
             description: Documentation des APIs publiques.
-            version: 1.0.0
+            version: 3.0.0
         tags:
             - name: "Accueil"
               description: "Endpoints liés à la page d'accueil"
@@ -17,10 +17,11 @@ nelmio_api_doc:
               description: "Endpoints pour l'enregistrement des utilisateurs"
             - name: "Sécurité"
               description: "Endpoints pour la sécurité et l'authentification"
-            - name: "Panier"
-              description: "Gestion du panier"
+            - { name: "Panier", description: "Gestion du panier" }
             - name: "Boutique"
               description: "Endpoints pour lister ou détailler les produits"
+            - name: "User Management"
+              description: "API pour la gestion des utilisateurs"
             
     areas:
         path_patterns:
