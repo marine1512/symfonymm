@@ -4,10 +4,36 @@ nelmio_api_doc:
             title: API Documentation
             description: Documentation des APIs publiques.
             version: 1.0.0
+        tags:
+            - name: "Accueil"
+              description: "Endpoints liés à la page d'accueil"
+            - name: "Authentification"
+              description: "Endpoints pour l'authentification des utilisateurs"
+            - name: "Produits"
+              description: "Endpoints pour la gestion des produits"
+            - name: "Paiement"
+              description: "Endpoints pour le traitement des paiements" 
+            - name: "Inscription"
+              description: "Endpoints pour l'enregistrement des utilisateurs"
+            - name: "Sécurité"
+              description: "Endpoints pour la sécurité et l'authentification"
+            - name: "Panier"
+              description: "Gestion du panier"
+            - name: "Boutique"
+              description: "Endpoints pour lister ou détailler les produits"
             
     areas:
         path_patterns:
-            # Inclure uniquement les routes API
+            - ^/$
             - ^/api
-            # Ignorer tout ce qui commence par `/_`
             - ^/(?!_)
+            - ^/home
+            - ^/register
+            - ^/login
+            - ^/logout
+            - ^/products      
+            - ^/cart         
+            - ^/checkout     
+            - ^/success      
+            - ^/cancel      
+            - ^/admin

@@ -9,7 +9,7 @@ final class ShopControllerTest extends WebTestCase
     public function testIndex(): void
     {
         $client = static::createClient();
-        $client->request('GET', '/shop');
+        $client->request('GET', '/products');
 
         self::assertResponseIsSuccessful();
     }

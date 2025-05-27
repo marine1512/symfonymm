@@ -14,8 +14,11 @@ use Symfony\Component\Mime\Address;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Contracts\Translation\TranslatorInterface;
+use OpenApi\Annotations as OA;
 
-
+/**
+ * @OA\Tag(name="Inscription")
+ */
 class RegistrationController extends AbstractController
 {
     private EmailVerifier $emailVerifier;
@@ -24,6 +27,34 @@ class RegistrationController extends AbstractController
     {
         $this->emailVerifier = $emailVerifier;
     }
+
+        /**
+     * Inscription d'un nouvel utilisateur.
+     *
+     * @OA\Post(
+     *     path="/register",
+     *     summary="Créer un compte utilisateur",
+     *     description="Permet aux nouveaux utilisateurs de s'enregistrer en créant un compte.",
+     *     tags={"Inscription"},
+     *     @OA\RequestBody(
+     *         description="Les données d'inscription",
+     *         required=true,
+     *         @OA\JsonContent(
+     *             type="object",
+     *             @OA\Property(property="email", type="string", example="test@example.com"),
+     *             @OA\Property(property="plainPassword", type="string", example="strongpassword123")
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=200,
+     *         description="Formulaire d'inscription affiché ou envoi de mail de confirmation."
+     *     ),
+     *     @OA\Response(
+     *         response=400,
+     *         description="Erreur lors de la soumission du formulaire ou données non valides."
+     *     )
+     * )
+     */
     #[Route('/register', name: 'app_register')]
     public function register(Request $request, UserPasswordHasherInterface $userPasswordHasher, EntityManagerInterface $entityManager): Response
     {
@@ -62,6 +93,24 @@ class RegistrationController extends AbstractController
         ]);
     }
     
+    /**
+     * Confirmation du mail utilisateur.
+     *
+     * @OA\Get(
+     *     path="/verify/email",
+     *     summary="Vérification de l'email",
+     *     description="Permet la vérification de l'adresse email de l'utilisateur après inscription.",
+     *     tags={"Inscription"},
+     *     @OA\Response(
+     *         response=200,
+     *         description="Email vérifié avec succès."
+     *     ),
+     *     @OA\Response(
+     *         response=403,
+     *         description="Accès refusé si l'utilisateur n'est pas connecté."
+     *     )
+     * )
+     */
     #[Route('/verify/email', name: 'app_verify_email')]
     public function verifyUserEmail(
         Request $request,
@@ -87,6 +136,19 @@ class RegistrationController extends AbstractController
         return $this->redirectToRoute('home');
     }
     
+    /**
+     * Notification de confirmation d'email.
+     *
+     * @OA\Get(
+     *     path="/register/confirmation",
+     *     summary="Afficher la notification de confirmation.",
+     *     tags={"Inscription"},
+     *     @OA\Response(
+     *         response=200,
+     *         description="Page de notification affichée avec succès."
+     *     )
+     * )
+     */
     #[Route('/register/confirmation', name: 'app_register_confirmation')]
     public function confirmEmailNotification(): Response
     {

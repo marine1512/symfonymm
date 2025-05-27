@@ -1,0 +1,1230 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "API Documentation",
+        "description": "Documentation des APIs publiques.",
+        "version": "1.0.0"
+    },
+    "paths": {
+        "/": {
+            "get": {
+                "operationId": "get_app_accueil",
+                "responses": {
+                    "default": {
+                        "description": ""
+                    }
+                }
+            }
+        },
+        "/cart": {
+            "get": {
+                "operationId": "get_cart",
+                "responses": {
+                    "default": {
+                        "description": ""
+                    }
+                }
+            },
+            "put": {
+                "operationId": "put_cart",
+                "responses": {
+                    "default": {
+                        "description": ""
+                    }
+                }
+            },
+            "post": {
+                "operationId": "post_cart",
+                "responses": {
+                    "default": {
+                        "description": ""
+                    }
+                }
+            },
+            "delete": {
+                "operationId": "delete_cart",
+                "responses": {
+                    "default": {
+                        "description": ""
+                    }
+                }
+            },
+            "options": {
+                "operationId": "options_cart",
+                "responses": {
+                    "default": {
+                        "description": ""
+                    }
+                }
+            },
+            "head": {
+                "operationId": "head_cart",
+                "responses": {
+                    "default": {
+                        "description": ""
+                    }
+                }
+            },
+            "patch": {
+                "operationId": "patch_cart",
+                "responses": {
+                    "default": {
+                        "description": ""
+                    }
+                }
+            },
+            "trace": {
+                "operationId": "trace_cart",
+                "responses": {
+                    "default": {
+                        "description": ""
+                    }
+                }
+            }
+        },
+        "/cart/add/{id}": {
+            "post": {
+                "summary": "Ajoute un produit au panier.",
+                "operationId": "post_cart_add",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "default": {
+                        "description": ""
+                    }
+                }
+            }
+        },
+        "/cart/remove/{id}": {
+            "post": {
+                "summary": "Supprime un produit du panier.",
+                "operationId": "post_cart_remove",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "default": {
+                        "description": ""
+                    }
+                }
+            }
+        },
+        "/checkout": {
+            "get": {
+                "summary": "Cr\u00e9e une session de paiement Stripe.",
+                "operationId": "get_app_checkout",
+                "responses": {
+                    "default": {
+                        "description": ""
+                    }
+                }
+            },
+            "put": {
+                "summary": "Cr\u00e9e une session de paiement Stripe.",
+                "operationId": "put_app_checkout",
+                "responses": {
+                    "default": {
+                        "description": ""
+                    }
+                }
+            },
+            "post": {
+                "summary": "Cr\u00e9e une session de paiement Stripe.",
+                "operationId": "post_app_checkout",
+                "responses": {
+                    "default": {
+                        "description": ""
+                    }
+                }
+            },
+            "delete": {
+                "summary": "Cr\u00e9e une session de paiement Stripe.",
+                "operationId": "delete_app_checkout",
+                "responses": {
+                    "default": {
+                        "description": ""
+                    }
+                }
+            },
+            "options": {
+                "summary": "Cr\u00e9e une session de paiement Stripe.",
+                "operationId": "options_app_checkout",
+                "responses": {
+                    "default": {
+                        "description": ""
+                    }
+                }
+            },
+            "head": {
+                "summary": "Cr\u00e9e une session de paiement Stripe.",
+                "operationId": "head_app_checkout",
+                "responses": {
+                    "default": {
+                        "description": ""
+                    }
+                }
+            },
+            "patch": {
+                "summary": "Cr\u00e9e une session de paiement Stripe.",
+                "operationId": "patch_app_checkout",
+                "responses": {
+                    "default": {
+                        "description": ""
+                    }
+                }
+            },
+            "trace": {
+                "summary": "Cr\u00e9e une session de paiement Stripe.",
+                "operationId": "trace_app_checkout",
+                "responses": {
+                    "default": {
+                        "description": ""
+                    }
+                }
+            }
+        },
+        "/success": {
+            "get": {
+                "summary": "Confirmation de paiement r\u00e9ussi.",
+                "operationId": "get_payment_success",
+                "responses": {
+                    "default": {
+                        "description": ""
+                    }
+                }
+            },
+            "put": {
+                "summary": "Confirmation de paiement r\u00e9ussi.",
+                "operationId": "put_payment_success",
+                "responses": {
+                    "default": {
+                        "description": ""
+                    }
+                }
+            },
+            "post": {
+                "summary": "Confirmation de paiement r\u00e9ussi.",
+                "operationId": "post_payment_success",
+                "responses": {
+                    "default": {
+                        "description": ""
+                    }
+                }
+            },
+            "delete": {
+                "summary": "Confirmation de paiement r\u00e9ussi.",
+                "operationId": "delete_payment_success",
+                "responses": {
+                    "default": {
+                        "description": ""
+                    }
+                }
+            },
+            "options": {
+                "summary": "Confirmation de paiement r\u00e9ussi.",
+                "operationId": "options_payment_success",
+                "responses": {
+                    "default": {
+                        "description": ""
+                    }
+                }
+            },
+            "head": {
+                "summary": "Confirmation de paiement r\u00e9ussi.",
+                "operationId": "head_payment_success",
+                "responses": {
+                    "default": {
+                        "description": ""
+                    }
+                }
+            },
+            "patch": {
+                "summary": "Confirmation de paiement r\u00e9ussi.",
+                "operationId": "patch_payment_success",
+                "responses": {
+                    "default": {
+                        "description": ""
+                    }
+                }
+            },
+            "trace": {
+                "summary": "Confirmation de paiement r\u00e9ussi.",
+                "operationId": "trace_payment_success",
+                "responses": {
+                    "default": {
+                        "description": ""
+                    }
+                }
+            }
+        },
+        "/cancel": {
+            "get": {
+                "summary": "Annulation d'un paiement.",
+                "operationId": "get_payment_cancel",
+                "responses": {
+                    "default": {
+                        "description": ""
+                    }
+                }
+            },
+            "put": {
+                "summary": "Annulation d'un paiement.",
+                "operationId": "put_payment_cancel",
+                "responses": {
+                    "default": {
+                        "description": ""
+                    }
+                }
+            },
+            "post": {
+                "summary": "Annulation d'un paiement.",
+                "operationId": "post_payment_cancel",
+                "responses": {
+                    "default": {
+                        "description": ""
+                    }
+                }
+            },
+            "delete": {
+                "summary": "Annulation d'un paiement.",
+                "operationId": "delete_payment_cancel",
+                "responses": {
+                    "default": {
+                        "description": ""
+                    }
+                }
+            },
+            "options": {
+                "summary": "Annulation d'un paiement.",
+                "operationId": "options_payment_cancel",
+                "responses": {
+                    "default": {
+                        "description": ""
+                    }
+                }
+            },
+            "head": {
+                "summary": "Annulation d'un paiement.",
+                "operationId": "head_payment_cancel",
+                "responses": {
+                    "default": {
+                        "description": ""
+                    }
+                }
+            },
+            "patch": {
+                "summary": "Annulation d'un paiement.",
+                "operationId": "patch_payment_cancel",
+                "responses": {
+                    "default": {
+                        "description": ""
+                    }
+                }
+            },
+            "trace": {
+                "summary": "Annulation d'un paiement.",
+                "operationId": "trace_payment_cancel",
+                "responses": {
+                    "default": {
+                        "description": ""
+                    }
+                }
+            }
+        },
+        "/home": {
+            "get": {
+                "operationId": "get_home",
+                "responses": {
+                    "default": {
+                        "description": ""
+                    }
+                }
+            },
+            "put": {
+                "operationId": "put_home",
+                "responses": {
+                    "default": {
+                        "description": ""
+                    }
+                }
+            },
+            "post": {
+                "operationId": "post_home",
+                "responses": {
+                    "default": {
+                        "description": ""
+                    }
+                }
+            },
+            "delete": {
+                "operationId": "delete_home",
+                "responses": {
+                    "default": {
+                        "description": ""
+                    }
+                }
+            },
+            "options": {
+                "operationId": "options_home",
+                "responses": {
+                    "default": {
+                        "description": ""
+                    }
+                }
+            },
+            "head": {
+                "operationId": "head_home",
+                "responses": {
+                    "default": {
+                        "description": ""
+                    }
+                }
+            },
+            "patch": {
+                "operationId": "patch_home",
+                "responses": {
+                    "default": {
+                        "description": ""
+                    }
+                }
+            },
+            "trace": {
+                "operationId": "trace_home",
+                "responses": {
+                    "default": {
+                        "description": ""
+                    }
+                }
+            }
+        },
+        "/register": {
+            "get": {
+                "summary": "Inscription d'un nouvel utilisateur.",
+                "operationId": "get_app_register",
+                "responses": {
+                    "default": {
+                        "description": ""
+                    }
+                }
+            },
+            "put": {
+                "summary": "Inscription d'un nouvel utilisateur.",
+                "operationId": "put_app_register",
+                "responses": {
+                    "default": {
+                        "description": ""
+                    }
+                }
+            },
+            "post": {
+                "summary": "Inscription d'un nouvel utilisateur.",
+                "operationId": "post_app_register",
+                "responses": {
+                    "default": {
+                        "description": ""
+                    }
+                }
+            },
+            "delete": {
+                "summary": "Inscription d'un nouvel utilisateur.",
+                "operationId": "delete_app_register",
+                "responses": {
+                    "default": {
+                        "description": ""
+                    }
+                }
+            },
+            "options": {
+                "summary": "Inscription d'un nouvel utilisateur.",
+                "operationId": "options_app_register",
+                "responses": {
+                    "default": {
+                        "description": ""
+                    }
+                }
+            },
+            "head": {
+                "summary": "Inscription d'un nouvel utilisateur.",
+                "operationId": "head_app_register",
+                "responses": {
+                    "default": {
+                        "description": ""
+                    }
+                }
+            },
+            "patch": {
+                "summary": "Inscription d'un nouvel utilisateur.",
+                "operationId": "patch_app_register",
+                "responses": {
+                    "default": {
+                        "description": ""
+                    }
+                }
+            },
+            "trace": {
+                "summary": "Inscription d'un nouvel utilisateur.",
+                "operationId": "trace_app_register",
+                "responses": {
+                    "default": {
+                        "description": ""
+                    }
+                }
+            }
+        },
+        "/verify/email": {
+            "get": {
+                "summary": "Confirmation du mail utilisateur.",
+                "operationId": "get_app_verify_email",
+                "responses": {
+                    "default": {
+                        "description": ""
+                    }
+                }
+            },
+            "put": {
+                "summary": "Confirmation du mail utilisateur.",
+                "operationId": "put_app_verify_email",
+                "responses": {
+                    "default": {
+                        "description": ""
+                    }
+                }
+            },
+            "post": {
+                "summary": "Confirmation du mail utilisateur.",
+                "operationId": "post_app_verify_email",
+                "responses": {
+                    "default": {
+                        "description": ""
+                    }
+                }
+            },
+            "delete": {
+                "summary": "Confirmation du mail utilisateur.",
+                "operationId": "delete_app_verify_email",
+                "responses": {
+                    "default": {
+                        "description": ""
+                    }
+                }
+            },
+            "options": {
+                "summary": "Confirmation du mail utilisateur.",
+                "operationId": "options_app_verify_email",
+                "responses": {
+                    "default": {
+                        "description": ""
+                    }
+                }
+            },
+            "head": {
+                "summary": "Confirmation du mail utilisateur.",
+                "operationId": "head_app_verify_email",
+                "responses": {
+                    "default": {
+                        "description": ""
+                    }
+                }
+            },
+            "patch": {
+                "summary": "Confirmation du mail utilisateur.",
+                "operationId": "patch_app_verify_email",
+                "responses": {
+                    "default": {
+                        "description": ""
+                    }
+                }
+            },
+            "trace": {
+                "summary": "Confirmation du mail utilisateur.",
+                "operationId": "trace_app_verify_email",
+                "responses": {
+                    "default": {
+                        "description": ""
+                    }
+                }
+            }
+        },
+        "/register/confirmation": {
+            "get": {
+                "summary": "Notification de confirmation d'email.",
+                "operationId": "get_app_register_confirmation",
+                "responses": {
+                    "default": {
+                        "description": ""
+                    }
+                }
+            },
+            "put": {
+                "summary": "Notification de confirmation d'email.",
+                "operationId": "put_app_register_confirmation",
+                "responses": {
+                    "default": {
+                        "description": ""
+                    }
+                }
+            },
+            "post": {
+                "summary": "Notification de confirmation d'email.",
+                "operationId": "post_app_register_confirmation",
+                "responses": {
+                    "default": {
+                        "description": ""
+                    }
+                }
+            },
+            "delete": {
+                "summary": "Notification de confirmation d'email.",
+                "operationId": "delete_app_register_confirmation",
+                "responses": {
+                    "default": {
+                        "description": ""
+                    }
+                }
+            },
+            "options": {
+                "summary": "Notification de confirmation d'email.",
+                "operationId": "options_app_register_confirmation",
+                "responses": {
+                    "default": {
+                        "description": ""
+                    }
+                }
+            },
+            "head": {
+                "summary": "Notification de confirmation d'email.",
+                "operationId": "head_app_register_confirmation",
+                "responses": {
+                    "default": {
+                        "description": ""
+                    }
+                }
+            },
+            "patch": {
+                "summary": "Notification de confirmation d'email.",
+                "operationId": "patch_app_register_confirmation",
+                "responses": {
+                    "default": {
+                        "description": ""
+                    }
+                }
+            },
+            "trace": {
+                "summary": "Notification de confirmation d'email.",
+                "operationId": "trace_app_register_confirmation",
+                "responses": {
+                    "default": {
+                        "description": ""
+                    }
+                }
+            }
+        },
+        "/login": {
+            "get": {
+                "summary": "Connexion de l'utilisateur.",
+                "operationId": "get_app_login",
+                "responses": {
+                    "default": {
+                        "description": ""
+                    }
+                }
+            },
+            "put": {
+                "summary": "Connexion de l'utilisateur.",
+                "operationId": "put_app_login",
+                "responses": {
+                    "default": {
+                        "description": ""
+                    }
+                }
+            },
+            "post": {
+                "summary": "Connexion de l'utilisateur.",
+                "operationId": "post_app_login",
+                "responses": {
+                    "default": {
+                        "description": ""
+                    }
+                }
+            },
+            "delete": {
+                "summary": "Connexion de l'utilisateur.",
+                "operationId": "delete_app_login",
+                "responses": {
+                    "default": {
+                        "description": ""
+                    }
+                }
+            },
+            "options": {
+                "summary": "Connexion de l'utilisateur.",
+                "operationId": "options_app_login",
+                "responses": {
+                    "default": {
+                        "description": ""
+                    }
+                }
+            },
+            "head": {
+                "summary": "Connexion de l'utilisateur.",
+                "operationId": "head_app_login",
+                "responses": {
+                    "default": {
+                        "description": ""
+                    }
+                }
+            },
+            "patch": {
+                "summary": "Connexion de l'utilisateur.",
+                "operationId": "patch_app_login",
+                "responses": {
+                    "default": {
+                        "description": ""
+                    }
+                }
+            },
+            "trace": {
+                "summary": "Connexion de l'utilisateur.",
+                "operationId": "trace_app_login",
+                "responses": {
+                    "default": {
+                        "description": ""
+                    }
+                }
+            }
+        },
+        "/login_check": {
+            "get": {
+                "summary": "Endpoint de v\u00e9rification de connexion.",
+                "operationId": "get_app_login_check",
+                "responses": {
+                    "default": {
+                        "description": ""
+                    }
+                }
+            },
+            "put": {
+                "summary": "Endpoint de v\u00e9rification de connexion.",
+                "operationId": "put_app_login_check",
+                "responses": {
+                    "default": {
+                        "description": ""
+                    }
+                }
+            },
+            "post": {
+                "summary": "Endpoint de v\u00e9rification de connexion.",
+                "operationId": "post_app_login_check",
+                "responses": {
+                    "default": {
+                        "description": ""
+                    }
+                }
+            },
+            "delete": {
+                "summary": "Endpoint de v\u00e9rification de connexion.",
+                "operationId": "delete_app_login_check",
+                "responses": {
+                    "default": {
+                        "description": ""
+                    }
+                }
+            },
+            "options": {
+                "summary": "Endpoint de v\u00e9rification de connexion.",
+                "operationId": "options_app_login_check",
+                "responses": {
+                    "default": {
+                        "description": ""
+                    }
+                }
+            },
+            "head": {
+                "summary": "Endpoint de v\u00e9rification de connexion.",
+                "operationId": "head_app_login_check",
+                "responses": {
+                    "default": {
+                        "description": ""
+                    }
+                }
+            },
+            "patch": {
+                "summary": "Endpoint de v\u00e9rification de connexion.",
+                "operationId": "patch_app_login_check",
+                "responses": {
+                    "default": {
+                        "description": ""
+                    }
+                }
+            },
+            "trace": {
+                "summary": "Endpoint de v\u00e9rification de connexion.",
+                "operationId": "trace_app_login_check",
+                "responses": {
+                    "default": {
+                        "description": ""
+                    }
+                }
+            }
+        },
+        "/logout": {
+            "get": {
+                "summary": "D\u00e9connexion de l'utilisateur.",
+                "operationId": "get_app_logout",
+                "responses": {
+                    "default": {
+                        "description": ""
+                    }
+                }
+            },
+            "put": {
+                "summary": "D\u00e9connexion de l'utilisateur.",
+                "operationId": "put_app_logout",
+                "responses": {
+                    "default": {
+                        "description": ""
+                    }
+                }
+            },
+            "post": {
+                "summary": "D\u00e9connexion de l'utilisateur.",
+                "operationId": "post_app_logout",
+                "responses": {
+                    "default": {
+                        "description": ""
+                    }
+                }
+            },
+            "delete": {
+                "summary": "D\u00e9connexion de l'utilisateur.",
+                "operationId": "delete_app_logout",
+                "responses": {
+                    "default": {
+                        "description": ""
+                    }
+                }
+            },
+            "options": {
+                "summary": "D\u00e9connexion de l'utilisateur.",
+                "operationId": "options_app_logout",
+                "responses": {
+                    "default": {
+                        "description": ""
+                    }
+                }
+            },
+            "head": {
+                "summary": "D\u00e9connexion de l'utilisateur.",
+                "operationId": "head_app_logout",
+                "responses": {
+                    "default": {
+                        "description": ""
+                    }
+                }
+            },
+            "patch": {
+                "summary": "D\u00e9connexion de l'utilisateur.",
+                "operationId": "patch_app_logout",
+                "responses": {
+                    "default": {
+                        "description": ""
+                    }
+                }
+            },
+            "trace": {
+                "summary": "D\u00e9connexion de l'utilisateur.",
+                "operationId": "trace_app_logout",
+                "responses": {
+                    "default": {
+                        "description": ""
+                    }
+                }
+            }
+        },
+        "/products": {
+            "get": {
+                "summary": "Lister les produits avec un filtrage facultatif par plage de prix.",
+                "operationId": "get_shop",
+                "responses": {
+                    "default": {
+                        "description": ""
+                    }
+                }
+            },
+            "put": {
+                "summary": "Lister les produits avec un filtrage facultatif par plage de prix.",
+                "operationId": "put_shop",
+                "responses": {
+                    "default": {
+                        "description": ""
+                    }
+                }
+            },
+            "post": {
+                "summary": "Lister les produits avec un filtrage facultatif par plage de prix.",
+                "operationId": "post_shop",
+                "responses": {
+                    "default": {
+                        "description": ""
+                    }
+                }
+            },
+            "delete": {
+                "summary": "Lister les produits avec un filtrage facultatif par plage de prix.",
+                "operationId": "delete_shop",
+                "responses": {
+                    "default": {
+                        "description": ""
+                    }
+                }
+            },
+            "options": {
+                "summary": "Lister les produits avec un filtrage facultatif par plage de prix.",
+                "operationId": "options_shop",
+                "responses": {
+                    "default": {
+                        "description": ""
+                    }
+                }
+            },
+            "head": {
+                "summary": "Lister les produits avec un filtrage facultatif par plage de prix.",
+                "operationId": "head_shop",
+                "responses": {
+                    "default": {
+                        "description": ""
+                    }
+                }
+            },
+            "patch": {
+                "summary": "Lister les produits avec un filtrage facultatif par plage de prix.",
+                "operationId": "patch_shop",
+                "responses": {
+                    "default": {
+                        "description": ""
+                    }
+                }
+            },
+            "trace": {
+                "summary": "Lister les produits avec un filtrage facultatif par plage de prix.",
+                "operationId": "trace_shop",
+                "responses": {
+                    "default": {
+                        "description": ""
+                    }
+                }
+            }
+        },
+        "/product/{id}": {
+            "get": {
+                "summary": "D\u00e9tails d\u2019un produit sp\u00e9cifique.",
+                "operationId": "get_product_detail",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "default": {
+                        "description": ""
+                    }
+                }
+            },
+            "put": {
+                "summary": "D\u00e9tails d\u2019un produit sp\u00e9cifique.",
+                "operationId": "put_product_detail",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "default": {
+                        "description": ""
+                    }
+                }
+            },
+            "post": {
+                "summary": "D\u00e9tails d\u2019un produit sp\u00e9cifique.",
+                "operationId": "post_product_detail",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "default": {
+                        "description": ""
+                    }
+                }
+            },
+            "delete": {
+                "summary": "D\u00e9tails d\u2019un produit sp\u00e9cifique.",
+                "operationId": "delete_product_detail",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "default": {
+                        "description": ""
+                    }
+                }
+            },
+            "options": {
+                "summary": "D\u00e9tails d\u2019un produit sp\u00e9cifique.",
+                "operationId": "options_product_detail",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "default": {
+                        "description": ""
+                    }
+                }
+            },
+            "head": {
+                "summary": "D\u00e9tails d\u2019un produit sp\u00e9cifique.",
+                "operationId": "head_product_detail",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "default": {
+                        "description": ""
+                    }
+                }
+            },
+            "patch": {
+                "summary": "D\u00e9tails d\u2019un produit sp\u00e9cifique.",
+                "operationId": "patch_product_detail",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "default": {
+                        "description": ""
+                    }
+                }
+            },
+            "trace": {
+                "summary": "D\u00e9tails d\u2019un produit sp\u00e9cifique.",
+                "operationId": "trace_product_detail",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "default": {
+                        "description": ""
+                    }
+                }
+            }
+        },
+        "/admin/": {
+            "get": {
+                "summary": "Liste tous les sweatshirts.",
+                "operationId": "get_admin_sweatshirt_index",
+                "responses": {
+                    "default": {
+                        "description": ""
+                    }
+                }
+            }
+        },
+        "/admin/new": {
+            "get": {
+                "summary": "Ajout d'un nouveau sweatshirt.",
+                "operationId": "get_admin_sweatshirt_new",
+                "responses": {
+                    "default": {
+                        "description": ""
+                    }
+                }
+            },
+            "post": {
+                "summary": "Ajout d'un nouveau sweatshirt.",
+                "operationId": "post_admin_sweatshirt_new",
+                "responses": {
+                    "default": {
+                        "description": ""
+                    }
+                }
+            }
+        },
+        "/admin/{id}": {
+            "get": {
+                "summary": "Afficher un sweatshirt sp\u00e9cifique.",
+                "operationId": "get_admin_sweatshirt_show",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "default": {
+                        "description": ""
+                    }
+                }
+            },
+            "post": {
+                "summary": "Supprimer un sweatshirt.",
+                "operationId": "post_admin_sweatshirt_delete",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "default": {
+                        "description": ""
+                    }
+                }
+            }
+        },
+        "/admin/{id}/edit": {
+            "get": {
+                "summary": "Modifier un sweatshirt.",
+                "operationId": "get_admin_sweatshirt_edit",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "default": {
+                        "description": ""
+                    }
+                }
+            },
+            "post": {
+                "summary": "Modifier un sweatshirt.",
+                "operationId": "post_admin_sweatshirt_edit",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "default": {
+                        "description": ""
+                    }
+                }
+            }
+        },
+        "/create-admin": {
+            "post": {
+                "operationId": "post_create_admin",
+                "responses": {
+                    "default": {
+                        "description": ""
+                    }
+                }
+            }
+        },
+        "/create-client": {
+            "post": {
+                "operationId": "post_create_client",
+                "responses": {
+                    "default": {
+                        "description": ""
+                    }
+                }
+            }
+        },
+        "/user": {
+            "get": {
+                "operationId": "get_app_user_index",
+                "responses": {
+                    "default": {
+                        "description": ""
+                    }
+                }
+            }
+        }
+    },
+    "tags": []
+}

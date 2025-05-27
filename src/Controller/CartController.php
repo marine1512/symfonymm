@@ -12,9 +12,31 @@ use App\Service\CartService;
 use App\Service\StripeService;
 use OpenApi\Annotations as OA;
 
+/**
+ * @OA\Tag(
+ *     name="Panier",
+ *     description="Gestion du panier"
+ * )
+ */
 
 class CartController extends AbstractController
-
+    /**
+     * Affiche le panier.
+     * @OA\Get(
+     *     path="/cart",
+     *     summary="Afficher le contenu du panier",
+     *     tags={"Panier"},
+     *     @OA\Response(
+     *         response=200,
+     *         description="Page du panier affichée avec succès",
+     *         @OA\JsonContent(
+     *             type="object",
+     *             @OA\Property(property="cart", type="array", @OA\Items(type="object")),
+     *             @OA\Property(property="totalPrice", type="number", format="float")
+     *         )
+     *     )
+     * )
+     */
 {
     #[Route('/cart', name: 'cart')]
     public function index(Request $request): Response
@@ -33,6 +55,38 @@ class CartController extends AbstractController
         ]);
     }
 
+     /**
+     * Ajoute un produit au panier.
+     *
+     * @OA\Post(
+     *     path="/cart/add/{id}",
+     *     summary="Ajouter un produit au panier",
+     *     tags={"Panier"},
+     *     @OA\Parameter(
+     *         name="id",
+     *         in="path",
+     *         required=true,
+     *         description="ID du produit à ajouter au panier",
+     *         @OA\Schema(type="integer")
+     *     ),
+     *     @OA\RequestBody(
+     *         description="Données pour ajouter le produit au panier",
+     *         required=true,
+     *         @OA\JsonContent(
+     *             type="object",
+     *             @OA\Property(property="size", type="string", description="Taille du produit sélectionnée")
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=302,
+     *         description="Redirection vers le panier après ajout"
+     *     ),
+     *     @OA\Response(
+     *         response=404,
+     *         description="Produit non trouvé"
+     *     )
+     * )
+     */
     #[Route('/cart/add/{id}', name: 'cart_add', methods: ['POST'])]
     public function addToCart($id, Request $request, ManagerRegistry $doctrine): Response
     {
@@ -83,6 +137,26 @@ class CartController extends AbstractController
         return $this->redirectToRoute('cart'); 
     }
     
+    /**
+     * Supprime un produit du panier.
+     *
+     * @OA\Post(
+     *     path="/cart/remove/{id}",
+     *     summary="Supprimer un produit du panier",
+     *     tags={"Panier"},
+     *     @OA\Parameter(
+     *         name="id",
+     *         in="path",
+     *         required=true,
+     *         description="ID unique du produit à supprimer du panier",
+     *         @OA\Schema(type="string")
+     *     ),
+     *     @OA\Response(
+     *         response=302,
+     *         description="Redirection vers le panier après suppression"
+     *     )
+     * )
+     */
     #[Route('/cart/remove/{id}', name: 'cart_remove', methods: ['POST'])]
     public function removeFromCart($id, Request $request): Response
     {
@@ -102,23 +176,22 @@ class CartController extends AbstractController
         return $this->redirectToRoute('cart'); 
     } 
 
-        /**
-     * Créer une session de paiement avec Stripe.
+    /**
+     * Crée une session de paiement Stripe.
      *
      * @Route("/checkout", name="app_checkout", methods={"POST"})
      *
      * @OA\Post(
      *     path="/checkout",
-     *     summary="Créer une session Stripe",
-     *     tags={"Payment"},
-     *     description="Créé une session de paiement Stripe pour le contenu actuel du panier.",
+     *     summary="Créer une session Stripe pour le panier actuel",
+     *     tags={"Paiement"},
      *     @OA\Response(
      *         response=303,
-     *         description="Redirige vers l'URL Stripe Checkout."
+     *         description="Redirige vers l'URL de paiement Stripe Checkout"
      *     ),
      *     @OA\Response(
      *         response=400,
-     *         description="Erreur si le panier est vide.",
+     *         description="Retourne une erreur si le panier est vide",
      *         @OA\JsonContent(
      *             @OA\Property(property="message", type="string", example="Votre panier est vide.")
      *         )
@@ -155,7 +228,21 @@ class CartController extends AbstractController
         return $this->redirect($session->url, 303);
     }
 
-
+    /**
+     * Confirmation de paiement réussi.
+     *
+     * @Route("/success", name="payment_success", methods={"GET"})
+     *
+     * @OA\Get(
+     *     path="/success",
+     *     summary="Confirme que le paiement a été effectué avec succès",
+     *     tags={"Paiement"},
+     *     @OA\Response(
+     *         response=200,
+     *         description="Retourne un message confirmant le succès du paiement"
+     *     )
+     * )
+     */
     #[Route('/success', name: 'payment_success')]
     public function success(CartService $cartService): Response
     {
@@ -164,6 +251,20 @@ class CartController extends AbstractController
         return $this->redirectToRoute('home');
     }
 
+    /**
+     * Annulation d'un paiement.
+     *
+     *
+     * @OA\Get(
+     *     path="/cancel",
+     *     summary="Indique que le paiement a été annulé",
+     *     tags={"Paiement"},
+     *     @OA\Response(
+     *         response=200,
+     *         description="Retourne un message signalant l'annulation du paiement"
+     *     )
+     * )
+     */
     #[Route('/cancel', name: 'payment_cancel')]
     public function cancel(): Response
     {

@@ -4,13 +4,19 @@ namespace App\Tests\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
-final class UserControllerTest extends WebTestCase
+class UserControllerTest extends WebTestCase
 {
-    public function testIndex(): void
+    public function testIndex()
     {
         $client = static::createClient();
-        $client->request('GET', '/user');
 
-        self::assertResponseIsSuccessful();
+        // Faites une requête GET vers "/user"
+        $crawler = $client->request('GET', '/user');
+
+        // Vérifiez que la réponse HTTP est OK
+        $this->assertResponseIsSuccessful();
+
+        // Vérifiez qu'il y a un élément <h1> dans le HTML rendu
+        $this->assertSelectorTextContains('h1', 'Liste des utilisateurs');
     }
 }

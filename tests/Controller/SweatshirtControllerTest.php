@@ -67,7 +67,7 @@ final class SweatshirtControllerTest extends WebTestCase
         $fixture->setName('My Title');
         $fixture->setPrice('My Title');
         $fixture->setIsPromoted('My Title');
-        $fixture->setStockBySize('My Title');
+        $fixture->setStockBySize(['size' => 'My Title']);
         $fixture->setImage('My Title');
 
         $this->manager->persist($fixture);
@@ -88,7 +88,7 @@ final class SweatshirtControllerTest extends WebTestCase
         $fixture->setName('Value');
         $fixture->setPrice('Value');
         $fixture->setIsPromoted('Value');
-        $fixture->setStockBySize('Value');
+        $fixture->setStockBySize(['size' => 'Value']);
         $fixture->setImage('Value');
 
         $this->manager->persist($fixture);
@@ -122,7 +122,7 @@ final class SweatshirtControllerTest extends WebTestCase
         $fixture->setName('Value');
         $fixture->setPrice('Value');
         $fixture->setIsPromoted('Value');
-        $fixture->setStockBySize('Value');
+        $fixture->setStockBySize(['size' => 'Value']);
         $fixture->setImage('Value');
 
         $this->manager->persist($fixture);
