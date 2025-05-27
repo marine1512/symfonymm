@@ -38,7 +38,7 @@ class CartController extends AbstractController
      * )
      */
 {
-    #[Route('/cart', name: 'cart')]
+    #[Route('/cart', name: 'cart', methods: ['GET'])]
     public function index(Request $request): Response
     {
         // Récupération du panier en session (tableau des articles)
