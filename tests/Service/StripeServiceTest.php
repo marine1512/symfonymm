@@ -11,7 +11,14 @@ class StripeServiceTest extends TestCase
 
     protected function setUp(): void
     {
-        $this->stripeService = new StripeService('***REMOVED***tdXcoroX0WZSnXmLOLJn3uTfEyRXxYELbZ3f5OcNUZ2E5y3FI304Qupc4z1GIPWp900Htq0nD74'); 
+        // Récupérez la clé Stripe à partir des variables d'environnement
+        $stripeApiKey = getenv('STRIPE_SECRET_KEY');
+
+        if (!$stripeApiKey) {
+            throw new \Exception('La variable STRIPE_SECRET_KEY n\'est pas définie.');
+        }
+
+        $this->stripeService = new StripeService($stripeApiKey);
     }
 
     public function testCreateCheckoutSession(): void
