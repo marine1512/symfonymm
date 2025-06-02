@@ -7,49 +7,28 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 use App\Repository\SweatshirtRepository;
-use OpenApi\Annotations as OA;
+
 /**
- * @OA\Tag(name="Boutique", description="Gestion des produits de la boutique")
+ * Contrôleur pour gérer la boutique en ligne.
+ *
+ * Ce contrôleur gère la liste des produits et les détails d'un produit individuel.
  */
- 
 class ShopController extends AbstractController
 {
     /**
-     * Lister les produits avec un filtrage facultatif par plage de prix.
-     * 
+     * Affiche la liste des produits disponibles dans la boutique.
      *
-     * @OA\Get(
-     *     path="/products",
-     *     summary="Lister les produits",
-     *     tags={"Boutique"},
-     *     @OA\Parameter(
-     *         name="priceRange",
-     *         in="query",
-     *         description="Filtrer par plage de prix. Exemples : '10-29', '29-35', '35-50'",
-     *         required=false,
-     *         @OA\Schema(type="string", example="10-29")
-     *     ),
-     *     @OA\Response(
-     *         response=200,
-     *         description="Une liste des produits disponibles",
-     *         @OA\JsonContent(
-     *             type="array",
-     *             @OA\Items(
-     *                 type="object",
-     *                 @OA\Property(property="id", type="integer", example=1),
-     *                 @OA\Property(property="name", type="string", example="Sweatshirt rouge"),
-     *                 @OA\Property(property="price", type="number", format="float", example=29.99),
-     *                 @OA\Property(property="image", type="string", example="/images/sweat.png")
-     *             )
-     *         )
-     *     ),
-     *     @OA\Response(
-     *         response=400,
-     *         description="Paramètre de requête non valide"
-     *     )
-     * )
+     * Cette méthode applique un filtrage facultatif basé sur une plage de prix
+     * indiquée dans les requêtes. 
+     *
+     * @Route("/products", name="shop", methods={"GET"})
+     *
+     * @param Request $request La requête HTTP contenant les données du filtre de prix.
+     * @param SweatshirtRepository $productRepository Le repository permettant de récupérer les produits.
+     *
+     * @return Response La réponse HTTP contenant la vue avec la liste des produits.
      */
-    #[Route('/products', name: 'shop')]
+    #[Route('/products', name: 'shop', methods: ['GET'])]
     public function list(Request $request, SweatshirtRepository $productRepository): Response
     {
         // Filtrage par plage de prix
@@ -78,49 +57,30 @@ class ShopController extends AbstractController
     }
 
     /**
-     * Détails d’un produit spécifique.
+     * Affiche les détails d'un produit spécifique.
      *
-     * @OA\Get(
-     *     path="/product/{id}",
-     *     summary="Détails d'un produit",
-     *     tags={"Boutique"},
-     *     @OA\Parameter(
-     *         name="id",
-     *         in="path",
-     *         description="Identifiant du produit",
-     *         required=true,
-     *         @OA\Schema(type="integer", example=1)
-     *     ),
-     *     @OA\Response(
-     *         response=200,
-     *         description="Détails d'un produit",
-     *         @OA\JsonContent(
-     *             type="object",
-     *             @OA\Property(property="id", type="integer", example=1),
-     *             @OA\Property(property="name", type="string", example="Sweatshirt rouge"),
-     *             @OA\Property(property="description", type="string", example="Un sweatshirt chaud et confortable."),
-     *             @OA\Property(property="price", type="number", format="float", example=29.99),
-     *             @OA\Property(property="stock", type="integer", example=15),
-     *             @OA\Property(property="image", type="string", example="/images/sweatred.png")
-     *         )
-     *     ),
-     *     @OA\Response(
-     *         response=404,
-     *         description="Produit non trouvé."
-     *     )
-     * )
+     * Si le produit n'est pas trouvé, une exception HTTP 404 est levée.
+     *
+     * @Route("/product/{id}", name="product_detail", methods={"GET"})
+     *
+     * @param int $id L'identifiant unique du produit à afficher.
+     * @param SweatshirtRepository $productRepository Le repository permettant de trouver les produits.
+     *
+     * @return Response La réponse HTTP contenant la vue des détails du produit.
+     *
+     * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException Si le produit n'est pas trouvé.
      */
-    #[Route('/product/{id}', name: 'product_detail')]
+    #[Route('/product/{id}', name: 'product_detail', methods: ['GET'])]
     public function detail(int $id, SweatshirtRepository $productRepository): Response
     {
-    $product = $productRepository->find($id);
+        $product = $productRepository->find($id);
 
-    if (!$product) {
-        throw $this->createNotFoundException('Produit non trouvé');
-    }
+        if (!$product) {
+            throw $this->createNotFoundException('Produit non trouvé');
+        }
 
-    return $this->render('shop/detail.html.twig', [
-        'product' => $product,
-    ]);
+        return $this->render('shop/detail.html.twig', [
+            'product' => $product,
+        ]);
     }
 }

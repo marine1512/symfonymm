@@ -2,46 +2,31 @@
 
 namespace App\Controller;
 
+use App\Entity\Sweatshirt;
+use App\Service\CartService;
+use App\Service\StripeService;
+use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use App\Entity\Sweatshirt;
-use Doctrine\Persistence\ManagerRegistry;
-use App\Service\CartService;
-use App\Service\StripeService;
-use OpenApi\Annotations as OA;
 
 /**
- * @OA\Tag(
- *     name="Panier",
- *     description="Gestion du panier"
- * )
+ * Contrôleur pour la gestion du panier et du processus d'achat.
  */
-
 class CartController extends AbstractController
 {
     /**
-     * Affiche le panier.
-     * @OA\Get(
-     *     path="/cart",
-     *     summary="Afficher le contenu du panier",
-     *     tags={"Panier"},
-     *     @OA\Response(
-     *         response=200,
-     *         description="Page du panier affichée avec succès",
-     *         @OA\JsonContent(
-     *             type="object",
-     *             @OA\Property(property="cart", type="array", @OA\Items(type="object")),
-     *             @OA\Property(property="totalPrice", type="number", format="float")
-     *         )
-     *     )
-     * )
+     * Affiche le contenu du panier avec le prix total.
+     *
+     * @param Request $request La requête HTTP pour récupérer la session utilisateur.
+     *
+     * @return Response La réponse HTTP contenant la vue du panier.
      */
     #[Route('/cart', name: 'cart', methods: ['GET'])]
     public function index(Request $request): Response
     {
-        // Récupération du panier en session (tableau des articles)
+        // Récupération du panier en session
         $cart = $request->getSession()->get('cart', []);
 
         // Calcul du prix total
@@ -55,37 +40,16 @@ class CartController extends AbstractController
         ]);
     }
 
-     /**
+    /**
      * Ajoute un produit au panier.
      *
-     * @OA\Post(
-     *     path="/cart/add/{id}",
-     *     summary="Ajouter un produit au panier",
-     *     tags={"Panier"},
-     *     @OA\Parameter(
-     *         name="id",
-     *         in="path",
-     *         required=true,
-     *         description="ID du produit à ajouter au panier",
-     *         @OA\Schema(type="integer")
-     *     ),
-     *     @OA\RequestBody(
-     *         description="Données pour ajouter le produit au panier",
-     *         required=true,
-     *         @OA\JsonContent(
-     *             type="object",
-     *             @OA\Property(property="size", type="string", description="Taille du produit sélectionnée")
-     *         )
-     *     ),
-     *     @OA\Response(
-     *         response=302,
-     *         description="Redirection vers le panier après ajout"
-     *     ),
-     *     @OA\Response(
-     *         response=404,
-     *         description="Produit non trouvé"
-     *     )
-     * )
+     * @param int $id L'identifiant du produit à ajouter.
+     * @param Request $request La requête HTTP pour récupérer les données utilisateur.
+     * @param ManagerRegistry $doctrine Gestionnaire des entités Doctrine.
+     *
+     * @return Response Une redirection vers la page du panier ou un autre endpoint adapté.
+     *
+     * @throws \LogicException Si le produit ou la taille est invalide.
      */
     #[Route('/cart/add/{id}', name: 'cart_add', methods: ['POST'])]
     public function addToCart($id, Request $request, ManagerRegistry $doctrine): Response
@@ -93,13 +57,12 @@ class CartController extends AbstractController
         // Récupérer le produit depuis la base de données via Doctrine
         $product = $doctrine->getRepository(Sweatshirt::class)->find($id);
 
-        // Vérifiez si le produit existe
         if (!$product) {
             $this->addFlash('error', 'Produit non trouvé.');
-            return $this->redirectToRoute('product_list'); // Redirection personnalisée
+            return $this->redirectToRoute('product_list');
         }
 
-        // Récupération de la taille sélectionnée depuis le formulaire
+        // Récupération de la taille sélectionnée
         $size = $request->request->get('size');
 
         // Vérification de la taille et du stock
@@ -113,10 +76,9 @@ class CartController extends AbstractController
         $session = $request->getSession();
         $cart = $session->get('cart', []);
 
-        // Identifier l'article dans le panier (ID et taille)
         $itemKey = $id . '-' . $size;
 
-        // Ajouter ou mettre à jour la quantité dans le panier
+        // Ajouter ou mettre à jour la quantité
         if (isset($cart[$itemKey])) {
             $cart[$itemKey]['quantity'] += 1;
         } else {
@@ -130,72 +92,45 @@ class CartController extends AbstractController
             ];
         }
 
-        // Sauvegarder le panier dans la session
         $session->set('cart', $cart);
 
         $this->addFlash('success', 'Produit ajouté au panier avec succès.');
-        return $this->redirectToRoute('cart'); 
+        return $this->redirectToRoute('cart');
     }
-    
+
     /**
      * Supprime un produit du panier.
      *
-     * @OA\Post(
-     *     path="/cart/remove/{id}",
-     *     summary="Supprimer un produit du panier",
-     *     tags={"Panier"},
-     *     @OA\Parameter(
-     *         name="id",
-     *         in="path",
-     *         required=true,
-     *         description="ID unique du produit à supprimer du panier",
-     *         @OA\Schema(type="string")
-     *     ),
-     *     @OA\Response(
-     *         response=302,
-     *         description="Redirection vers le panier après suppression"
-     *     )
-     * )
+     * @param string $id La clé de l'article à supprimer (inclut taille et ID).
+     * @param Request $request La requête HTTP contenant la session utilisateur.
+     *
+     * @return Response Une redirection vers la page du panier après mise à jour.
      */
     #[Route('/cart/remove/{id}', name: 'cart_remove', methods: ['POST'])]
     public function removeFromCart($id, Request $request): Response
     {
-        // Gestion du panier depuis la session
         $session = $request->getSession();
-        $cart = $session->get('cart', []); 
-    
-        // Vérifier si l'article (par sa clé) existe dans le panier
+        $cart = $session->get('cart', []);
+
         if (isset($cart[$id])) {
             unset($cart[$id]);
         }
-    
-        // Sauvegarder les modifications dans la session
+
         $session->set('cart', $cart);
-    
         $this->addFlash('success', 'Produit retiré du panier avec succès.');
-        return $this->redirectToRoute('cart'); 
-    } 
+
+        return $this->redirectToRoute('cart');
+    }
 
     /**
-     * Crée une session de paiement Stripe.
+     * Lance le processus de paiement via Stripe.
      *
+     * @param CartService $cartService Service de gestion du panier complet.
+     * @param StripeService $stripeService Service pour la gestion des paiements via Stripe.
      *
-     * @OA\Post(
-     *     path="/checkout",
-     *     summary="Créer une session Stripe pour le panier actuel",
-     *     tags={"Paiement"},
-     *     @OA\Response(
-     *         response=303,
-     *         description="Redirige vers l'URL de paiement Stripe Checkout"
-     *     ),
-     *     @OA\Response(
-     *         response=400,
-     *         description="Retourne une erreur si le panier est vide",
-     *         @OA\JsonContent(
-     *             @OA\Property(property="message", type="string", example="Votre panier est vide.")
-     *         )
-     *     )
-     * )
+     * @return Response Une redirection vers l'URL de paiement Stripe.
+     *
+     * @throws \Exception Si une erreur survient lors de la création de la session Stripe.
      */
     #[Route('/checkout', name: 'app_checkout')]
     public function checkout(CartService $cartService, StripeService $stripeService): Response
@@ -212,7 +147,7 @@ class CartController extends AbstractController
                     'product_data' => [
                         'name' => $item['product']->getName(),
                     ],
-                    'unit_amount' => (int) ($item['product']->getPrice() * 100),  // Prix en centimes
+                    'unit_amount' => (int) ($item['product']->getPrice() * 100),
                 ],
                 'quantity' => $item['quantity'],
             ];
@@ -228,18 +163,11 @@ class CartController extends AbstractController
     }
 
     /**
-     * Confirmation de paiement réussi.
+     * Page de succès après paiement.
      *
+     * @param CartService $cartService Service pour vider le panier après paiement.
      *
-     * @OA\Get(
-     *     path="/success",
-     *     summary="Confirme que le paiement a été effectué avec succès",
-     *     tags={"Paiement"},
-     *     @OA\Response(
-     *         response=200,
-     *         description="Retourne un message confirmant le succès du paiement"
-     *     )
-     * )
+     * @return Response Redirection vers la page d'accueil.
      */
     #[Route('/success', name: 'payment_success')]
     public function success(CartService $cartService): Response
@@ -250,18 +178,9 @@ class CartController extends AbstractController
     }
 
     /**
-     * Annulation d'un paiement.
+     * Page affichée en cas d'annulation du paiement.
      *
-     *
-     * @OA\Get(
-     *     path="/cancel",
-     *     summary="Indique que le paiement a été annulé",
-     *     tags={"Paiement"},
-     *     @OA\Response(
-     *         response=200,
-     *         description="Retourne un message signalant l'annulation du paiement"
-     *     )
-     * )
+     * @return Response Redirection vers la page du panier.
      */
     #[Route('/cancel', name: 'payment_cancel')]
     public function cancel(): Response

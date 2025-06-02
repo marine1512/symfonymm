@@ -6,71 +6,26 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use App\Repository\SweatshirtRepository;
-use OpenApi\Annotations as OA;
 
 /**
- * @OA\Tag(
- *     name="Accueil",
- *     description="Endpoints pour gérer la page d'accueil"
- * )
+ * Contrôleur HomeController.
+ *
+ * Ce contrôleur est responsable de la gestion de la route "/home",
+ * incluant l'affichage des produits promus et la vérification de
+ * l'état de connexion de l'utilisateur pour personnaliser la vue.
  */
-
 class HomeController extends AbstractController
 {
     /**
-     * @OA\Get(
-     *     path="/home",
-     *     summary="Page d'accueil",
-     *     tags={"Accueil"},
-     *     description="Récupère les produits promus et l'état de connexion de l'utilisateur.",
-     *     @OA\Response(
-     *         response=200,
-     *         description="Retourne la liste des produits promus et l'état de connexion.",
-     *         @OA\JsonContent(
-     *             type="object",
-     *             @OA\Property(
-     *                 property="promotedProducts",
-     *                 type="array",
-     *                 @OA\Items(ref="#/components/schemas/Sweatshirt")
-     *             ),
-     *             @OA\Property(
-     *                 property="isUserLoggedIn",
-     *                 type="boolean",
-     *                 example=true
-     *             )
-     *         )
-     *     ),
-     *     @OA\Response(
-     *         response=401,
-     *         description="Utilisateur non authentifié"
-     *     )
-     * )
+     * Méthode principale du contrôleur qui affiche la page d'accueil.
      * 
-     * @OA\Schema(
-     *     schema="Sweatshirt",
-     *     type="object",
-     *     @OA\Property(
-     *         property="id",
-     *         type="integer",
-     *         example=1
-     *     ),
-     *     @OA\Property(
-     *         property="name",
-     *         type="string",
-     *         example="Sweatshirt Cool"
-     *     ),
-     *     @OA\Property(
-     *         property="price",
-     *         type="number",
-     *         format="float",
-     *         example=29.99
-     *     ),
-     *     @OA\Property(
-     *         property="isPromoted",
-     *         type="boolean",
-     *         example=true
-     *     )
-     * )
+     * Cette méthode se charge de récupérer les produits promus
+     * via le repository et de transmettre les données nécessaires
+     * à la vue Twig associée.
+     *
+     * @param SweatshirtRepository $sweatshirtRepository Service permettant d'accéder aux sweatshirts promus depuis la base de données.
+     * 
+     * @return Response Une réponse HTTP avec le rendu HTML de la page d'accueil.
      */
     #[Route('/home', name: 'home')]
     public function index(SweatshirtRepository $sweatshirtRepository): Response
@@ -86,5 +41,4 @@ class HomeController extends AbstractController
             'isUserLoggedIn' => $isUserLoggedIn,
         ]);
     }
-
 }

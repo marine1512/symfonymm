@@ -10,36 +10,21 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use OpenApi\Annotations as OA;
 
 /**
- * @OA\Tag(name="Produits", description="Endpoints pour gérer les sweatshirts")
+ * Contrôleur pour gérer les opérations CRUD sur les sweatshirts côté admin.
+ *
+ * @package App\Controller
  */
-
 #[Route('/admin', name: 'admin_sweatshirt_')]
 class SweatshirtController extends AbstractController
 {
-
     /**
-     * Liste tous les sweatshirts.
-     * 
-     * @OA\Get(
-     *     path="/admin/",
-     *     summary="Liste les sweatshirts disponibles",
-     *     tags={"Produits"},
-     *     @OA\Response(
-     *         response=200,
-     *         description="Liste des sweatshirts.",
-     *         @OA\JsonContent(
-     *             type="array",
-     *             @OA\Items(ref="#/components/schemas/Sweatshirt")
-     *         )
-     *     ),
-     *     @OA\Response(
-     *         response=403,
-     *         description="Accès interdit (non admin)."
-     *     )
-     * )
+     * Affiche la liste de tous les sweatshirts.
+     *
+     * @param SweatshirtRepository $sweatshirtRepository Le repository pour accéder aux sweatshirts.
+     *
+     * @return Response La réponse HTTP rendant la liste des sweatshirts.
      */
     #[Route('/', name: 'index', methods: ['GET'])]
     public function index(SweatshirtRepository $sweatshirtRepository): Response
@@ -51,25 +36,12 @@ class SweatshirtController extends AbstractController
     }
 
     /**
-     * Ajout d'un nouveau sweatshirt.
-     * 
-     * @OA\Post(
-     *     path="/admin/new",
-     *     summary="Créer un nouveau sweatshirt",
-     *     tags={"Produits"},
-     *     @OA\RequestBody(
-     *         required=true,
-     *         @OA\JsonContent(ref="#/components/schemas/Sweatshirt")
-     *     ),
-     *     @OA\Response(
-     *         response=201,
-     *         description="Sweatshirt créé avec succès."
-     *     ),
-     *     @OA\Response(
-     *         response=400,
-     *         description="Requête invalide."
-     *     )
-     * )
+     * Crée un nouveau sweatshirt.
+     *
+     * @param Request                $request         La requête HTTP contenant les données du formulaire.
+     * @param EntityManagerInterface $entityManager   Le gestionnaire d'entités pour manipuler la base de données.
+     *
+     * @return Response La réponse HTTP pour afficher le formulaire ou rediriger après la création.
      */
     #[Route('/new', name: 'new', methods: ['GET', 'POST'])]
     public function new(Request $request, EntityManagerInterface $entityManager): Response
@@ -92,29 +64,11 @@ class SweatshirtController extends AbstractController
     }
 
     /**
-     * Afficher un sweatshirt spécifique.
-     * 
-     * @OA\Get(
-     *     path="/admin/{id}",
-     *     summary="Afficher un sweatshirt",
-     *     tags={"Produits"},
-     *     @OA\Parameter(
-     *         name="id",
-     *         in="path",
-     *         description="Identifiant unique du sweatshirt",
-     *         required=true,
-     *         @OA\Schema(type="integer")
-     *     ),
-     *     @OA\Response(
-     *         response=200,
-     *         description="Détails du sweatshirt.",
-     *         @OA\JsonContent(ref="#/components/schemas/Sweatshirt")
-     *     ),
-     *     @OA\Response(
-     *         response=404,
-     *         description="Sweatshirt non trouvé."
-     *     )
-     * )
+     * Affiche un sweatshirt donné.
+     *
+     * @param Sweatshirt $sweatshirt Le sweatshirt à afficher.
+     *
+     * @return Response La réponse HTTP contenant le sweatshirt rendu.
      */
     #[Route('/{id}', name: 'show', methods: ['GET'])]
     public function show(Sweatshirt $sweatshirt): Response
@@ -125,36 +79,13 @@ class SweatshirtController extends AbstractController
     }
 
     /**
-     * Modifier un sweatshirt.
-     * 
-     * @OA\Put(
-     *     path="/admin/{id}/edit",
-     *     summary="Modifier un sweatshirt",
-     *     tags={"Produits"},
-     *     @OA\Parameter(
-     *         name="id",
-     *         in="path",
-     *         description="Identifiant unique du sweatshirt",
-     *         required=true,
-     *         @OA\Schema(type="integer")
-     *     ),
-     *     @OA\RequestBody(
-     *         required=true,
-     *         @OA\JsonContent(ref="#/components/schemas/Sweatshirt")
-     *     ),
-     *     @OA\Response(
-     *         response=200,
-     *         description="Sweatshirt modifié avec succès."
-     *     ),
-     *     @OA\Response(
-     *         response=400,
-     *         description="Requête invalide."
-     *     ),
-     *     @OA\Response(
-     *         response=404,
-     *         description="Sweatshirt non trouvé."
-     *     )
-     * )
+     * Édite un sweatshirt donné.
+     *
+     * @param Request                $request       La requête HTTP contenant les données modifiées.
+     * @param Sweatshirt             $sweatshirt    Le sweatshirt à modifier.
+     * @param EntityManagerInterface $entityManager Le gestionnaire d'entités pour persister les modifications.
+     *
+     * @return Response La réponse HTTP pour afficher le formulaire ou rediriger après l'édition.
      */
     #[Route('/{id}/edit', name: 'edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, Sweatshirt $sweatshirt, EntityManagerInterface $entityManager): Response
@@ -175,32 +106,13 @@ class SweatshirtController extends AbstractController
     }
 
     /**
-     * Supprimer un sweatshirt.
-     * 
-     * @OA\Delete(
-     *     path="/admin/{id}",
-     *     summary="Supprimer un sweatshirt",
-     *     tags={"Produits"},
-     *     @OA\Parameter(
-     *         name="id",
-     *         in="path",
-     *         description="Identifiant unique du sweatshirt",
-     *         required=true,
-     *         @OA\Schema(type="integer")
-     *     ),
-     *     @OA\Response(
-     *         response=204,
-     *         description="Sweatshirt supprimé avec succès."
-     *     ),
-     *     @OA\Response(
-     *         response=403,
-     *         description="Non autorisé."
-     *     ),
-     *     @OA\Response(
-     *         response=404,
-     *         description="Sweatshirt non trouvé."
-     *     )
-     * )
+     * Supprime un sweatshirt donné.
+     *
+     * @param Request                $request       La requête HTTP contenant le token CSRF.
+     * @param Sweatshirt             $sweatshirt    Le sweatshirt à supprimer.
+     * @param EntityManagerInterface $entityManager Le gestionnaire d'entités pour effectuer la suppression.
+     *
+     * @return Response Une redirection vers la liste des sweatshirts après suppression.
      */
     #[Route('/{id}', name: 'delete', methods: ['POST'])]
     public function delete(Request $request, Sweatshirt $sweatshirt, EntityManagerInterface $entityManager): Response
@@ -212,5 +124,4 @@ class SweatshirtController extends AbstractController
 
         return $this->redirectToRoute('admin_sweatshirt_index', [], Response::HTTP_SEE_OTHER);
     }
-
 }
