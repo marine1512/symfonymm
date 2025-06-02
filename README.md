@@ -48,8 +48,8 @@ Suivez ces étapes pour installer et lancer le projet localement :
 
 Cloner ce projet depuis GitHub :
 ```bash
-git clone https://github.com/nom-utilisateur/nom-du-projet.git
-cd nom-du-projet
+git clone https://github.com/marine1512/symfonymm.git
+cd symfonymm
 ```
 
 ### 2. Installez les dépendances
