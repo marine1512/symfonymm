@@ -185,4 +185,3 @@ public function testRemove(): void
     self::assertSame(0, $this->manager->getRepository(Sweatshirt::class)->count([]));
 }
 }
-
