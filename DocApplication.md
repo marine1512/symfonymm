@@ -91,3 +91,13 @@ L'application sera accessible sur : [https://127.0.0.1:8000]().
     - **Carte de test** : `4242 4242 4242 4242`
     - **Date d'expiration** : Une date valide dans le futur (par ex., `12/34`).
     - **Code de sécurité (CVC)** : `123`.
+ 
+### Procédure pour exécuter les tests avec PHPUnit
+- Installer PHPUnit : Si PHPUnit n'est pas encore installé, utilisez Composer pour l'ajouter à votre projet :
+``` bash
+composer require --dev phpunit/phpunit
+```
+- Exécuter un fichier spécifique : Si vous souhaitez exécuter uniquement les tests du fichier (exemple: CartServiceTest.php), utilisez :
+``` bash
+./vendor/bin/phpunit tests/Service/CartServiceTest.php
+```
