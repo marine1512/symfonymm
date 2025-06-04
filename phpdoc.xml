@@ -1,13 +1,28 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<phpdoc>
-  <title>Documentation Symfony Project</title>
+<phpdocumentor configVersion="3">
+
+  <title>Documentation Symfony MM</title>
 
   <paths>
-    <output>docs</output>
-    <directory>src</directory>
+    <output>phpdoc-output</output>
+    <cache>phpdoc-output/cache</cache>
   </paths>
 
-  <project>
-    <name>marinemignot/symfony-project</name>
-  </project>
-</phpdoc>
+  <templates>
+    <template>
+      <name>clean</name>
+    </template>
+  </templates>
+
+  <versions>
+    <version number="1.0">
+      <api>
+        <source dsn=".">
+          <path>src/Controller</path>
+          <path>src/Service</path>
+        </source>
+      </api>
+    </version>
+  </versions>
+
+</phpdocumentor>
