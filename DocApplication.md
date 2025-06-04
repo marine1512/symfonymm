@@ -58,8 +58,9 @@ APP_SECRET=
 
 DATABASE_URL="mysql://nom_utilisateur:mot_de_passe@127.0.0.1:3306/nom_base_de_donnees"
 
-STRIPE_API_SECRET="sk_test_votre_clé_secrète"
-STRIPE_API_PUBLIC="pk_test_votre_clé_publique"
+STRIPE_API_SECRET="clé_secrète_stripe_ici"
+STRIPE_API_PUBLIC="clé_publique_stripe_ici"
+
 ```
 
 -	Préparer la base de données
@@ -89,9 +90,6 @@ ______________________
     - **Carte de test** : `4242 4242 4242 4242`
     - **Date d'expiration** : par ex: `12/34`.
     - **Code de sécurité (CVC)** : `123`.
-
-STRIPE_SECRET_KEY=***REMOVED***tdXcoroX0WZSnXmLOLJn3uTfEyRXxYELbZ3f5OcNUZ2E5y3FI304Qupc4z1GIPWp900Htq0nD74
-STRIPE_PUBLIC_KEY=pk_test_51ROfCc2a6UM81evrHoC8F4lK7B2oqFe8BqNWGJFItsfYUHCeMyr9YAyAjAlrHMaMs0SdKDUHboY2BUwGvnhGJIuL00vEslhlrs
 
 - Procédure pour exécuter les tests avec PHPUnit
 - Installer PHPUnit : Si PHPUnit n'est pas encore installé, utilisez Composer pour l'ajouter à votre projet :
