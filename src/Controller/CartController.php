@@ -174,7 +174,9 @@ class CartController extends AbstractController
     {
         $cartService->clear();
         $this->addFlash('success', 'Votre paiement a été effectué avec succès !');
-        return $this->redirectToRoute('home');
+        return $this->render('cart/success.html.twig', [
+            'message' => 'Merci pour votre achat ! Votre paiement a été effectué avec succès.',
+        ]);
     }
 
     /**

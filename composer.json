@@ -1,5 +1,6 @@
 {
     "type": "project",
+    "name": "marinemignot/symfony-project",
     "license": "proprietary",
     "minimum-stability": "dev",
     "prefer-stable": true,
