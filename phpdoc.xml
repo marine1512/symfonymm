@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<phpdoc>
+  <title>Documentation Symfony Project</title>
+
+  <paths>
+    <output>docs</output>
+    <directory>src</directory>
+  </paths>
+
+  <project>
+    <name>marinemignot/symfony-project</name>
+  </project>
+</phpdoc>

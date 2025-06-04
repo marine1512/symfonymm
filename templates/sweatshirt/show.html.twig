@@ -8,7 +8,7 @@
 {% block title %}Sweatshirt{% endblock %}
 
 {% block body %}
-    <h1>Sweatshirt</h1>
+    <h1>{{ sweatshirt.name }}</h1>
 
     <table class="table">
         <tbody>
@@ -22,7 +22,7 @@
             </tr>
             <tr>
                 <th>Price</th>
-                <td>{{ sweatshirt.price }}</td>
+                <td class="product-price">{{ sweatshirt.price }}</td>
             </tr>
             <tr>
                 <th>IsPromoted</th>

@@ -77,6 +77,11 @@ h1 {
     margin-left: auto; 
 }
 
+p{
+    font-size: 1.2em;
+    margin-bottom: 1em;
+}
+
 .boutons{
     display: flex;
     flex-direction: column;

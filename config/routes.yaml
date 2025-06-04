@@ -3,7 +3,11 @@ controllers:
         path: ../src/Controller/
         namespace: App\Controller
     type: attribute
-app.swagger_ui:
-    path: /api/doc
-    controller: nelmio_api_doc.controller.swagger_ui
-    methods: [GET]
+
+
+chrome_devtools_json:
+  path: /.well-known/appspecific/com.chrome.devtools.json
+  controller: Symfony\Bundle\FrameworkBundle\Controller\RedirectController
+  defaults:
+    path: /
+    permanent: false

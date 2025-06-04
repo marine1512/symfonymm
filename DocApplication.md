@@ -58,8 +58,9 @@ APP_SECRET=
 
 DATABASE_URL="mysql://nom_utilisateur:mot_de_passe@127.0.0.1:3306/nom_base_de_donnees"
 
-STRIPE_API_SECRET="sk_test_votre_clé_secrète"
-STRIPE_API_PUBLIC="pk_test_votre_clé_publique"
+STRIPE_API_SECRET="clé_secrète_stripe_ici"
+STRIPE_API_PUBLIC="clé_publique_stripe_ici"
+
 ```
 
 -	Préparer la base de données
@@ -98,4 +99,3 @@ composer require --dev phpunit/phpunit
 - Exécuter un fichier spécifique : Si vous souhaitez exécuter uniquement les tests du fichier (exemple: CartServiceTest.php), utilisez :
 ``` bash
 ./vendor/bin/phpunit tests/Service/CartServiceTest.php
-```

@@ -11,80 +11,80 @@ use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
  * Entité représentant un utilisateur.
- *
- * @ORM\Entity(repositoryClass=UserRepository::class)
- * @ORM\Table(name="user")
- * @UniqueEntity(
- *     fields={"username"},
- *     message="Il existe déjà un compte avec cet identifiant."
- * )
  */
+
+#[ORM\Entity(repositoryClass: UserRepository::class)]
+#[ORM\Table(name: 'user')]
+#[UniqueEntity(fields: ['username'], message: 'Il existe déjà un compte avec cet identifiant.')]
+ 
 class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
     /** 
      * ID unique de l'utilisateur.
      * 
      * @var int|null
-     * @ORM\Id
-     * @ORM\GeneratedValue
-     * @ORM\Column(type=Types::INTEGER)
      */
+    #[ORM\Id]
+    #[ORM\GeneratedValue]
+    #[ORM\Column(type: Types::INTEGER)]
     private ?int $id = null;
 
     /** 
      * Nom d'utilisateur unique.
      * 
      * @var string|null
-     * @ORM\Column(length=180, unique=true)
      */
+
+    #[ORM\Column(length: 180, unique: true)]
     private ?string $username = null;
 
     /** 
      * Adresse e-mail unique de l'utilisateur.
      * 
      * @var string|null
-     * @ORM\Column(length=180, unique=true)
      */
+    #[ORM\Column(length: 180, unique: true)]
     private ?string $email = null;
 
     /**
      * Adresse de livraison.
      *
      * @var string|null
-     * @ORM\Column(type=Types::TEXT, nullable=true)
      */
+    #[ORM\Column(type: Types::TEXT, nullable: true)]
     private ?string $shippingAddress = null;
 
     /**
      * Rôles associés à l'utilisateur (format JSON).
      *
      * @var array
-     * @ORM\Column(type=Types::JSON)
      */
+    #[ORM\Column(type: Types::JSON)]
     private array $roles = [];
 
     /**
      * Mot de passe chiffré de l'utilisateur.
      * 
      * @var string|null
-     * @ORM\Column
      */
+
+    #[ORM\Column]
     private ?string $password = null;
 
     /** 
      * Indique si l'utilisateur est vérifié.
      *
      * @var bool
-     * @ORM\Column
      */
+    #[ORM\Column]
     private bool $isVerified = false;
 
     /** 
      * Jeton pour la vérification de l'adresse e-mail.
      * 
      * @var string|null
-     * @ORM\Column(type=Types::STRING, length=255, nullable=true)
      */
+    #[ORM\Column(type: Types::STRING, length: 255, nullable: true)]
     private ?string $emailVerificationToken = null;
 
     /**

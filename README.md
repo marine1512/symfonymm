@@ -114,3 +114,24 @@ Voici comment utiliser votre application :
 - **Gestion des stocks :** Les tailles disponibles sont gérées via des données JSON stockées dans la base de données.
 
 ---
+
+## Tests unitaires
+
+### Écrire et exécuter les tests
+
+Ce projet utilise PHPUnit pour les tests unitaires.
+
+1. Assurez-vous que les dépendances sont installées :
+   ```bash
+   composer install
+   ```
+
+2. Lancer tous les tests :
+   ```bash
+   ./vendor/bin/phpunit
+   ```
+
+3. Lancer des tests spécifiques, par exemple les tests pour l'entité `User` :
+   ```bash
+   ./vendor/bin/phpunit tests/Entity/UserTest.php
+   ```
