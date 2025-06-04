@@ -4,7 +4,7 @@ body{
 }
 
 main{
-    padding-top: 1em;
+    padding: 1em;
     display: flex;
     align-items: center;
     flex-direction: column;
