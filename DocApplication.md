@@ -99,4 +99,3 @@ composer require --dev phpunit/phpunit
 - Exécuter un fichier spécifique : Si vous souhaitez exécuter uniquement les tests du fichier (exemple: CartServiceTest.php), utilisez :
 ``` bash
 ./vendor/bin/phpunit tests/Service/CartServiceTest.php
-```
