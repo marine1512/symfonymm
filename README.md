@@ -2,7 +2,7 @@
 Nom d'utilisateur : admin   
 Mot de passe : admin
 
-📄 [Documentation PDF de l'application](./symfony-mm.pdf)
+📄 [Documentation PDF de l'application](./Symfony-mm.pdf)
 
 
 # E-Commerce avec Symfony et Stripe
