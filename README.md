@@ -2,6 +2,9 @@
 Nom d'utilisateur : admin   
 Mot de passe : admin
 
+📄 [Documentation PDF de l'application](./symfony-mm.pdf)
+
+
 # E-Commerce avec Symfony et Stripe
 
 Un projet de plateforme de commerce électronique développé avec **Symfony** pour la gestion et **Stripe** pour les paiements en ligne (Checkout).
